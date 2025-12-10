@@ -3,22 +3,22 @@
     <div class="flex flex-col cursor-default">
         <div class="overflow-x-auto">
       <div class="flex ml-16">
-        <div v-for="fret in NUM_FRETS" class="grid text-white shrink-0 font-bold py-2 w-25 text-end items-center">
+        <div v-for="fret in NUM_FRETS" class="grid text-neutral-300 shrink-0 font-bold py-2 w-25 text-end items-center">
         {{ fret }}
         </div>
       </div>
       <div v-for="(stri, stringIndex) in STRINGS" :key="stringIndex" class="flex items-center">
-        <p class="w-2 mx-4 text-white font-bold">{{ Object.values(tuningOffsets)[stringIndex] }}</p>
+        <p class="w-2 mx-4 text-neutral-400 font-bold" :class="{'text-white' : Math.abs(Object.values(tuningOffsets)[stringIndex]) > 0}">{{ Object.values(tuningOffsets)[stringIndex] }}</p>
         <button @click="tuneString(Object.keys(baseTunings)[stringIndex], 'down', tuning)"
                 class="bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mr-1">←</button>
         <button @click="tuneString(Object.keys(baseTunings)[stringIndex], 'up', tuning)"
                 class="bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1">→</button>
         <div class="flex">
-          <div v-for="(fret, i) in NUM_FRETS" :key="i" class="grid grid-cols-3 text-white shrink-0 font-bold py-2 w-25 border-r text-center items-center">
-            <div class="h-[1px] bg-blue-200"></div>
+          <div v-for="(fret, i) in NUM_FRETS" :key="i" class="grid grid-cols-3 text-white shrink-0 font-bold py-2 w-25 border-r border-neutral-300 text-center items-center">
+            <div class="h-[1px] bg-neutral-400" :class="{'bg-neutral-900' : i === 0}"></div>
             <div class="px-3 pr-6 py-1.5 rounded-full z-0 bg-green-800"
               :class="{'bg-red-600 rounded-md': chordNotes.includes(stri[i])}">{{ stri[i] }}</div>
-            <div class="h-[1px] bg-blue-200"></div>
+            <div class="h-[1px] bg-neutral-400" :class="{'bg-neutral-900' : i === 0}"></div>
           </div>
         </div>
       </div>
