@@ -3,7 +3,7 @@
     <div class="flex flex-col cursor-default">
         <div class="overflow-x-auto">
       <div class="flex ml-16">
-        <div v-for="fret in NUM_FRETS" class="grid text-neutral-300 shrink-0 font-bold py-2 w-25 text-end items-center">
+        <div v-for="fret in NUM_FRETS" class="grid text-neutral-300 shrink-0 py-2 w-25 text-end items-center" :class="{'font-bold text-white text-xl' : fret === 3 || fret === 5 || fret === 7 || fret === 10}">
         {{ fret }}
         </div>
       </div>
@@ -14,11 +14,11 @@
         <button @click="tuneString(Object.keys(baseTunings)[stringIndex], 'up', tuning)"
                 class="bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1">→</button>
         <div class="flex">
-          <div v-for="(fret, i) in NUM_FRETS" :key="i" class="grid grid-cols-3 text-white shrink-0 font-bold py-2 w-25 border-r border-neutral-300 text-center items-center">
-            <div class="h-[1px] bg-neutral-400" :class="{'bg-neutral-900' : i === 0}"></div>
+          <div v-for="(fret, i) in NUM_FRETS" :key="i" class="grid grid-cols-3 text-white shrink-0 font-bold py-2 w-25 border-r border-neutral-400 text-center items-center">
+            <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
             <div class="px-3 pr-6 py-1.5 rounded-full z-0 bg-green-800"
               :class="{'bg-red-600 rounded-md': chordNotes.includes(stri[i])}">{{ stri[i] }}</div>
-            <div class="h-[1px] bg-neutral-400" :class="{'bg-neutral-900' : i === 0}"></div>
+            <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
           </div>
         </div>
       </div>
