@@ -26,15 +26,15 @@
     </div>
     <div id="buttons" class="flex space-x-7 mt-4 shrink-0 overflow-x-auto">
         <div id="tuning-buttons" class="flex flex-col">
-            <button @click="tuneGCEA" class="bg-blue-600 text-white w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 font-bold': tuning === 'GCEA'}">GCEA</button>
-            <button @click="tuneDGBE" class="bg-blue-600 text-white w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 font-bold': tuning === 'DGBE'}">DGBE</button>
-            <button @click="tuneADFsB" class="bg-blue-600 text-white w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 font-bold': tuning === 'ADFsB'}">ADF#B</button>
-            <button @click="tuneFAsDG" class="bg-blue-600 text-white w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 font-bold': tuning === 'FAsDG'}">FA#DG</button>
+            <button @click="tuneGCEA" class="bg-blue-600 text-blue-200 w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 text-white font-bold': tuning === 'GCEA'}">GCEA</button>
+            <button @click="tuneDGBE" class="bg-blue-600 text-blue-200 w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 text-white font-bold': tuning === 'DGBE'}">DGBE</button>
+            <button @click="tuneADFsB" class="bg-blue-600 text-blue-200 w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 text-white font-bold': tuning === 'ADFsB'}">ADF#B</button>
+            <button @click="tuneFAsDG" class="bg-blue-600 text-blue-200 w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 text-white font-bold': tuning === 'FAsDG'}">FA#DG</button>
         </div>
         <div v-for="(tone, i) in NOTES" :key="i" class="flex">
-                <div :id="tone" class="bg-blue-600 text-white font-bold p-1 rounded" :class="{'bg-green-500': selectedChord === tone}">{{ tone }}
+                <div :id="tone" class="bg-blue-600 text-blue-200 font-bold p-1 rounded" :class="{'bg-blue-800 text-white': selectedChord === tone}">{{ tone }}
             <div v-for="(subtone, j) in SUBNOTES" :key="j" class="flex flex-row">
-                <button @click="setChord(tone, subtone)" :class="['bg-blue-600 font-normal w-14 py-1 rounded hover:bg-blue-700 ml-2', selectedChord === tone && selectedSubChord === subtone ? 'bg-green-200 text-black' : 'text-white']">{{ subtone }}</button>
+                <button @click="setChord(tone, subtone)" :class="['bg-blue-600 w-14 py-1 font-normal rounded hover:bg-blue-700 ml-2', selectedChord === tone && selectedSubChord === subtone ? 'bg-green-200 text-black font-bold' : 'text-blue-200']">{{ subtone }}</button>
                 </div>
             </div>
         </div>
