@@ -39,7 +39,7 @@
             </div>
         </div>
     </div>
-    <div class="flex space-x-6">
+    <div class="flex space-x-6 h-6">
         <p v-for="note in chordNotes" class="text-white font-bold">{{ note }}</p>
     </div>
   </div>
