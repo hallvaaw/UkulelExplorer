@@ -42,6 +42,7 @@
     <div class="flex space-x-6 h-6">
         <p v-for="note in chordNotes" class="text-white font-bold">{{ note }}</p>
     </div>
+    <button @click="toggleMode" class="bg-blue-600 ml-2 p-4 rounded-sm hover:bg-blue-500">#/b</button>
   </div>
 </template>
 
@@ -49,16 +50,34 @@
 import { ref, onMounted, onUnmounted, computed, reactive } from 'vue'
 import { CHORD_LIBRARY } from '../chordLibrary.js'
 
-const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 const NOTES_PER_OCTAVE = NOTES.length;
-const STRING_NOTES = ["A", "E", "C", "G"];
-const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug"];
+const STRING_NOTES = ["A", "E", "C", "G"]
+const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug"]
+const FLATS = ["Db", "Eb", "Gb", "Ab", "Bb"]
+const SHARPS = ["C#", "D#", "F#", "G#","A#"]
+let accidentalMode = ref("flat")
+
+function toggleAccidentals(notes, mode) {
+  return notes.map(note => {
+    if (mode === "flat" && note.includes("#")) {
+      const index = SHARPS.indexOf(note);
+      return index !== -1 ? FLATS[index] : note;
+    }
+
+    if (mode === "sharp" && FLATS.includes(note)) {
+      const index = FLATS.indexOf(note);
+      return SHARPS[index];
+    }
+
+    return note;
+  });
+}
 
 const windowWidth = ref(window.innerWidth)
 
 let selectedChord = ref()
 let selectedSubChord = ref()
-// const chordPositions = computed(() => CHORD_LIBRARY[selectedChord.value])
 const showChord = ref(true)
 const stringNames = ['A_STRING', 'E_STRING', 'C_STRING', 'G_STRING'];
 
@@ -113,6 +132,22 @@ const E_STRING = ref();
 const C_STRING = ref();
 const G_STRING = ref();
 
+const displayAString = computed(() =>
+  toggleAccidentals(A_STRING.value, accidentalMode.value)
+);
+
+const displayEString = computed(() =>
+  toggleAccidentals(E_STRING.value, accidentalMode.value)
+);
+
+const displayCString = computed(() =>
+  toggleAccidentals(C_STRING.value, accidentalMode.value)
+);
+
+const displayGString = computed(() =>
+  toggleAccidentals(G_STRING.value, accidentalMode.value)
+);
+
 const STRINGS = ref([
   A_STRING.value,
   E_STRING.value,
@@ -152,11 +187,28 @@ let baseTunings = reactive({
   G: NOTES.indexOf(G_STRING.value[0]),
 });
 
+function toggleMode() {
+
+    if (accidentalMode.value === "sharp") {
+        accidentalMode.value = "flat"
+    }
+    else {
+        accidentalMode.value = "sharp"
+    }
+
+  STRINGS.value = [
+    toggleAccidentals(A_STRING.value, accidentalMode.value),
+    toggleAccidentals(E_STRING.value, accidentalMode.value),
+    toggleAccidentals(C_STRING.value, accidentalMode.value),
+    toggleAccidentals(G_STRING.value, accidentalMode.value),
+  ];
+}
+
 const mainTunings = {
     GCEA: { A: 9, E: 4, C: 0, G: 7 },
-    ADFsB: { A: 11,  E: 6, C: 2, G: 9 },
-    DGBE: { A: 4,  E: 11, C: 7, G: 2 },
-    FAsDG: { A: 7,  E: 2, C: 10, G: 5 },
+    ADFsB: { A: 11, E: 6, C: 2, G: 9 },
+    DGBE: { A: 4, E: 11, C: 7, G: 2 },
+    FAsDG: { A: 7, E: 2, C: 10, G: 5 },
 }
 
 function tuneFunction(tuningData) {
@@ -176,6 +228,8 @@ function tuneFunction(tuningData) {
     tuningOffsets.value[key] = 0
     tuningValues.value[key] = 0
   }
+
+  accidentalMode.value = "sharp"
 }
 
 function tuneGCEA() {
