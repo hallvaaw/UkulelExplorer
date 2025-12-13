@@ -17,7 +17,7 @@
           <div v-for="(fret, i) in NUM_FRETS" :key="i" class="grid grid-cols-3 text-white shrink-0 font-bold py-2 w-25 border-r border-neutral-400 text-center items-center">
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
             <div class="px-3 pr-6 py-1.5 rounded-full z-0 bg-green-800"
-              :class="{'bg-red-600 rounded-md': chordNotes.includes(stri[i])}">{{ stri[i] }}</div>
+              :class="{'bg-red-600 rounded-md': displayChordNotes.includes(stri[i])}">{{ stri[i] }}</div>
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
           </div>
         </div>
@@ -40,7 +40,7 @@
         </div>
     </div>
     <div class="flex space-x-6 h-6">
-        <p v-for="note in chordNotes" class="text-white font-bold">{{ note }}</p>
+        <p v-for="note in displayChordNotes" class="text-white font-bold">{{ note }}</p>
     </div>
     <button @click="toggleMode" class="bg-blue-600 ml-2 p-4 rounded-sm hover:bg-blue-500">#/b</button>
   </div>
@@ -50,7 +50,7 @@
 import { ref, onMounted, onUnmounted, computed, reactive } from 'vue'
 import { CHORD_LIBRARY } from '../chordLibrary.js'
 
-const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+let NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 const NOTES_PER_OCTAVE = NOTES.length;
 const STRING_NOTES = ["A", "E", "C", "G"]
 const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug"]
@@ -58,20 +58,30 @@ const FLATS = ["Db", "Eb", "Gb", "Ab", "Bb"]
 const SHARPS = ["C#", "D#", "F#", "G#","A#"]
 let accidentalMode = ref("flat")
 
-function toggleAccidentals(notes, mode) {
-  return notes.map(note => {
-    if (mode === "flat" && note.includes("#")) {
-      const index = SHARPS.indexOf(note);
-      return index !== -1 ? FLATS[index] : note;
-    }
+function toggleAccidentals(input, mode) {
+  if (typeof input === "string") {
+    return convertNote(input, mode);
+  }
 
-    if (mode === "sharp" && FLATS.includes(note)) {
-      const index = FLATS.indexOf(note);
-      return SHARPS[index];
-    }
+  if (Array.isArray(input)) {
+    return input.map(note => convertNote(note, mode));
+  }
 
-    return note;
-  });
+  return input;
+}
+
+function convertNote(note, mode) {
+  if (mode === "flat" && note.includes("#")) {
+    const index = SHARPS.indexOf(note);
+    return index !== -1 ? FLATS[index] : note;
+  }
+
+  if (mode === "sharp" && FLATS.includes(note)) {
+    const index = FLATS.indexOf(note);
+    return SHARPS[index];
+  }
+
+  return note;
 }
 
 const windowWidth = ref(window.innerWidth)
@@ -83,17 +93,31 @@ const stringNames = ['A_STRING', 'E_STRING', 'C_STRING', 'G_STRING'];
 
 const NUM_FRETS = [...Array(13).keys()]
 
+function normalizeToSharp(note) {
+  const index = FLATS.indexOf(note);
+  return index !== -1 ? SHARPS[index] : note;
+}
+
 function setChord(c, d) {
-    selectedChord.value = c
+    selectedChord.value = normalizeToSharp(c)
     selectedSubChord.value = d
+
     return selectedChord, selectedSubChord
 }
+
 
 const chordNotes = computed(() => {
   if (!selectedChord.value || !selectedSubChord.value) return [];
 
   return (
     CHORD_LIBRARY[selectedChord.value][selectedSubChord.value] || []
+  );
+});
+
+const displayChordNotes = computed(() => {
+  return toggleAccidentals(
+    chordNotes.value,
+    accidentalMode.value === "flat" ? "flat" : "sharp"
   );
 });
 
@@ -195,6 +219,8 @@ function toggleMode() {
     else {
         accidentalMode.value = "sharp"
     }
+
+  NOTES = toggleAccidentals(NOTES, accidentalMode.value)
 
   STRINGS.value = [
     toggleAccidentals(A_STRING.value, accidentalMode.value),
