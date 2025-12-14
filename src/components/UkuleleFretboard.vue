@@ -32,9 +32,9 @@
             <button @click="tuneFAsDG" class="bg-blue-600 text-blue-200 w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 text-white font-bold': tuning === 'FAsDG'}">FA#DG</button>
         </div>
         <div v-for="(tone, i) in NOTES" :key="i" class="flex">
-                <div :id="tone" class="bg-blue-600 text-blue-200 font-bold p-1 rounded" :class="{'bg-blue-800 text-white': selectedChord === tone}">{{ tone }}
+                <div :id="tone" class="bg-blue-600 text-blue-200 font-bold p-1 rounded" :class="{'bg-blue-800 text-white': selectedChord === normalizeToSharp(tone)}">{{ tone }}
             <div v-for="(subtone, j) in SUBNOTES" :key="j" class="flex flex-row">
-                <button @click="setChord(tone, subtone)" :class="['bg-blue-600 w-14 py-1 font-normal rounded hover:bg-blue-700 ml-2', selectedChord === tone && selectedSubChord === subtone ? 'bg-green-200 text-black font-bold' : 'text-blue-200']">{{ subtone }}</button>
+                <button @click="setChord(tone, subtone)" :class="['bg-blue-600 w-14 py-1 font-normal rounded hover:bg-blue-700 ml-2', selectedChord ===  normalizeToSharp(tone) && selectedSubChord === subtone ? 'bg-green-200 text-black font-bold' : 'text-blue-200']">{{ subtone }}</button>
                 </div>
             </div>
         </div>
@@ -57,18 +57,7 @@ const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug"]
 const FLATS = ["Db", "Eb", "Gb", "Ab", "Bb"]
 const SHARPS = ["C#", "D#", "F#", "G#","A#"]
 let accidentalMode = ref("flat")
-
-function toggleAccidentals(input, mode) {
-  if (typeof input === "string") {
-    return convertNote(input, mode);
-  }
-
-  if (Array.isArray(input)) {
-    return input.map(note => convertNote(note, mode));
-  }
-
-  return input;
-}
+toggleAccidentals(NOTES, accidentalMode.value === "flat" ? "flat" : "sharp")
 
 function convertNote(note, mode) {
   if (mode === "flat" && note.includes("#")) {
@@ -82,6 +71,18 @@ function convertNote(note, mode) {
   }
 
   return note;
+}
+
+function toggleAccidentals(input, mode) {
+  if (typeof input === "string") {
+    return convertNote(input, mode);
+  }
+
+  if (Array.isArray(input)) {
+    return input.map(note => convertNote(note, mode));
+  }
+
+  return input;
 }
 
 const windowWidth = ref(window.innerWidth)
@@ -105,7 +106,6 @@ function setChord(c, d) {
     return selectedChord, selectedSubChord
 }
 
-
 const chordNotes = computed(() => {
   if (!selectedChord.value || !selectedSubChord.value) return [];
 
@@ -115,10 +115,7 @@ const chordNotes = computed(() => {
 });
 
 const displayChordNotes = computed(() => {
-  return toggleAccidentals(
-    chordNotes.value,
-    accidentalMode.value === "flat" ? "flat" : "sharp"
-  );
+  return toggleAccidentals(chordNotes.value, accidentalMode.value === "flat" ? "flat" : "sharp");
 });
 
 let tuningValue = ref(0);
