@@ -31,14 +31,19 @@
             <button @click="tuneADFsB" class="bg-blue-600 text-blue-200 w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 text-white font-bold': tuning === 'ADFsB'}">ADF#B</button>
             <button @click="tuneFAsDG" class="bg-blue-600 text-blue-200 w-20 py-4 rounded hover:bg-blue-700 ml-2" :class="{'bg-blue-800 text-white font-bold': tuning === 'FAsDG'}">FA#DG</button>
         </div>
-        <div v-for="(tone, i) in NOTES" :key="i" class="flex">
-                <div :id="tone" class="bg-blue-600 text-blue-200 font-bold p-1 rounded" :class="{'bg-blue-800 text-white': selectedChord === normalizeToSharp(tone)}">{{ tone }}
-            <div v-for="(subtone, j) in SUBNOTES" :key="j" class="flex flex-row">
-                <button @click="setChord(tone, subtone)" :class="['bg-blue-600 w-14 py-1 font-normal rounded hover:bg-blue-700 ml-2', selectedChord ===  normalizeToSharp(tone) && selectedSubChord === subtone ? 'bg-green-200 text-black font-bold' : 'text-blue-200']">{{ subtone }}</button>
+        <div class="flex flex-col">
+            <div class="flex space-x-6">
+                <div v-for="(tone, i) in NOTES" :key="i">
+                    <button @click="setTone(tone)" :class="['bg-blue-600 w-14 h-14 font-bold items-center rounded hover:bg-blue-700 ml-2', selectedChord === normalizeToSharp(tone) ? 'bg-green-200 text-black font-bold' : 'text-blue-200']">{{ tone }} </button>
+                </div>
+            </div>
+            <div class="flex space-x-6 justify-center">
+                <div v-for="(subtone, j) in SUBNOTES" :key="j">
+                    <button @click="setChord(subtone)" :class="['bg-blue-600 w-14 h-14 my-6 font-normal items-center rounded hover:bg-blue-700 ml-2', selectedSubChord === subtone ? 'bg-green-200 text-black font-bold' : 'text-blue-200']">{{ subtone }}</button>
                 </div>
             </div>
         </div>
-    </div>
+        </div>
     <div class="flex space-x-6 h-6">
         <p v-for="note in displayChordNotes" class="text-white font-bold">{{ note }}</p>
     </div>
@@ -99,9 +104,16 @@ function normalizeToSharp(note) {
   return index !== -1 ? SHARPS[index] : note;
 }
 
-function setChord(c, d) {
+function setTone(c) {
     selectedChord.value = normalizeToSharp(c)
+    console.log(selectedChord.value)
+
+    return selectedChord
+}
+
+function setChord(d) {
     selectedSubChord.value = d
+    console.log(selectedChord.value)
 
     return selectedChord, selectedSubChord
 }
@@ -284,7 +296,6 @@ function tuneFAsDG() {
 function tuneString(name, direction = "up", tuneSet) {
   tuningOffsets.value[name] += direction === "up" ? 1 : -1;
   tuningValues.value[name] += direction === "up" ? 1 : -1;
-  console.log(tuningOffsets.value[name])
   if (Math.abs(tuningOffsets.value[name]) === 12) {
         tuningOffsets.value[name] = 0
   }
