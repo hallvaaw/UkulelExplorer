@@ -17,7 +17,8 @@
           <div v-for="(fret, i) in NUM_FRETS" :key="i" class="grid grid-cols-3 text-white shrink-0 font-bold py-2 w-25 border-r border-neutral-400 text-center items-center">
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
             <div class="px-3 pr-6 py-1.5 rounded-full z-0 bg-green-800"
-              :class="{'bg-red-600 rounded-md': displayChordNotes.includes(stri[i])}">{{ stri[i] }}</div>
+              :class="[{'bg-yellow-600 rounded-md': firstChordPositions.some( p => p.stringIndex === stringIndex && p.fretIndex === fret)}, {'bg-red-600 rounded-md': displayChordNotes.includes(stri[i])}]"
+              >{{ stri[i] }}</div>
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
           </div>
         </div>
@@ -106,14 +107,32 @@ function normalizeToSharp(note) {
 
 function setTone(c) {
     selectedChord.value = normalizeToSharp(c)
-    console.log(selectedChord.value)
 
     return selectedChord
 }
 
+function findFirstOnString(stringNotes, remainingNotes, allChordNotes) {
+  for (let fretIndex = 0; fretIndex < stringNotes.length; fretIndex++) {
+    const note = stringNotes[fretIndex];
+
+    if (remainingNotes.includes(note)) {
+        remainingNotes.splice(remainingNotes, 1);
+        return { fretIndex, note };
+      }
+  }
+    for (let fretIndex = 0; fretIndex < stringNotes.length; fretIndex++) {
+    const note = stringNotes[fretIndex];
+
+    if (allChordNotes.includes(note)) {
+      return { fretIndex, note };
+    }
+}
+
+  return null;
+}
+
 function setChord(d) {
     selectedSubChord.value = d
-    console.log(selectedChord.value)
 
     return selectedChord, selectedSubChord
 }
@@ -124,6 +143,32 @@ const chordNotes = computed(() => {
   return (
     CHORD_LIBRARY[selectedChord.value][selectedSubChord.value] || []
   );
+});
+
+
+const firstChordPositions = computed(() => {
+  if (!selectedChord.value || !selectedSubChord.value) return [];
+
+  const chordNotes = CHORD_LIBRARY[selectedChord.value][selectedSubChord.value];
+  const remainingNotes = [...chordNotes];
+  const positions = []
+
+for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
+  const result = findFirstOnString(
+    STRINGS.value[stringIndex],
+    remainingNotes,
+    chordNotes
+  );
+
+    if (result) {
+      positions.push({
+        stringIndex,
+        fretIndex: result.fretIndex,
+        note: result.note,
+      });                           
+    }
+}
+return positions
 });
 
 const displayChordNotes = computed(() => {
