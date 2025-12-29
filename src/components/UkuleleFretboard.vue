@@ -157,7 +157,7 @@ for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
   const result = findFirstOnString(
     STRINGS.value[stringIndex],
     remainingNotes,
-    chordNotes
+    toggleAccidentals(chordNotes, accidentalMode.value === "flat" ? "flat" : "sharp")
   );
 
     if (result) {
@@ -165,7 +165,7 @@ for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
         stringIndex,
         fretIndex: result.fretIndex,
         note: result.note,
-      });                           
+      });
     }
 }
 return positions
