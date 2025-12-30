@@ -18,8 +18,9 @@
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
             <div class="px-3 pr-6 py-1.5 rounded-full z-0 bg-green-800"
               :class="[{'bg-yellow-600 rounded-md': firstChordPositions.some( p => p.stringIndex === stringIndex && p.fretIndex === fret)}, {'bg-red-600 rounded-md': displayChordNotes.includes(stri[i])}]"
-              >{{ stri[i] }}</div>
+              >{{ accidentalMode === "flat" ? toggleAccidental(stri[i], "flat") : stri[i] }}</div>
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
+            <!--{{ stri[i] }}</div></!-->
           </div>
         </div>
       </div>
@@ -91,6 +92,21 @@ function toggleAccidentals(input, mode) {
   return input;
 }
 
+function toggleAccidental(note, mode) {
+  if (mode === "flat" && note.includes("#")) {
+    const index = SHARPS.indexOf(note);
+    return index !== -1 ? FLATS[index] : note;
+  }
+
+  if (mode === "sharp" && FLATS.includes(note)) {
+    const index = FLATS.indexOf(note);
+    return index !== -1 ? SHARPS[index] : note;
+  }
+
+  return note;
+}
+
+
 const windowWidth = ref(window.innerWidth)
 
 let selectedChord = ref()
@@ -156,8 +172,8 @@ const firstChordPositions = computed(() => {
 for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
   const result = findFirstOnString(
     STRINGS.value[stringIndex],
-    remainingNotes,
-    toggleAccidentals(chordNotes, accidentalMode.value === "flat" ? "flat" : "sharp")
+    toggleAccidentals(remainingNotes, accidentalMode.value === "flat" ? "flat" : "sharp"),
+    chordNotes
   );
 
     if (result) {
