@@ -172,7 +172,7 @@ const firstChordPositions = computed(() => {
 for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
   const result = findFirstOnString(
     STRINGS.value[stringIndex],
-    toggleAccidentals(remainingNotes, accidentalMode.value === "flat" ? "flat" : "sharp"),
+    remainingNotes,
     chordNotes
   );
 
@@ -373,7 +373,6 @@ function tuneString(name, direction = "up", tuneSet) {
     C_STRING.value,
     G_STRING.value,
   ];
-  console.log(NOTES)
 
 }
 </script>
