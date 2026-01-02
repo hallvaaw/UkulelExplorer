@@ -64,7 +64,7 @@ const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug"]
 const FLATS = ["Db", "Eb", "Gb", "Ab", "Bb"]
 const SHARPS = ["C#", "D#", "F#", "G#","A#"]
 let accidentalMode = ref("flat")
-toggleAccidentals(NOTES, accidentalMode.value === "flat" ? "flat" : "sharp")
+// toggleAccidentals(NOTES, accidentalMode.value === "flat" ? "flat" : "sharp")
 
 function convertNote(note, mode) {
   if (mode === "flat" && note.includes("#")) {
@@ -128,20 +128,22 @@ function setTone(c) {
 }
 
 function findFirstOnString(stringNotes, remainingNotes, allChordNotes) {
+  const chordSet = allChordNotes
   for (let fretIndex = 0; fretIndex < stringNotes.length; fretIndex++) {
-    const note = stringNotes[fretIndex];
 
-    if (remainingNotes.includes(note)) {
-        remainingNotes.splice(remainingNotes, 1);
-        return { fretIndex, note };
-      }
+    const note = stringNotes[fretIndex];
+    const noteIndex = remainingNotes.indexOf(note);
+        if (noteIndex !== -1) {
+          remainingNotes.splice(noteIndex, 1);
+          return { fretIndex, note }
+        }
   }
     for (let fretIndex = 0; fretIndex < stringNotes.length; fretIndex++) {
-    const note = stringNotes[fretIndex];
+        const note = stringNotes[fretIndex];
 
-    if (allChordNotes.includes(note)) {
-      return { fretIndex, note };
-    }
+        if (chordSet.includes(note)) {
+          return { fretIndex, note };
+        }
 }
 
   return null;
@@ -162,19 +164,44 @@ const chordNotes = computed(() => {
 });
 
 
+// const firstChordPositions = computed(() => {
+//   if (!selectedChord.value || !selectedSubChord.value) return [];
+// 
+//   const chordNotes = CHORD_LIBRARY[selectedChord.value][selectedSubChord.value];
+//   const remainingNotes = [...chordNotes];
+//   const positions = []
+// 
+//     for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
+//       const result = findFirstOnString(
+//         STRINGS.value[stringIndex],
+//         remainingNotes,
+//         chordNotes
+//       );
+//     
+//       if (result) {
+//         positions.push({
+//           stringIndex,
+//           fretIndex: result.fretIndex,
+//           note: result.note,
+//         });
+//       }
+//     }
+//     return positions
+// });
+
 const firstChordPositions = computed(() => {
   if (!selectedChord.value || !selectedSubChord.value) return [];
 
   const chordNotes = CHORD_LIBRARY[selectedChord.value][selectedSubChord.value];
-  const remainingNotes = [...chordNotes];
-  const positions = []
+  const remainingNotes = [...chordNotes]; // fresh copy
+  const positions = [];
 
-for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
-  const result = findFirstOnString(
-    STRINGS.value[stringIndex],
-    remainingNotes,
-    chordNotes
-  );
+  for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
+    const result = findFirstOnString(
+      STRINGS.value[stringIndex],
+      remainingNotes,
+      chordNotes
+    );
 
     if (result) {
       positions.push({
@@ -183,9 +210,11 @@ for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
         note: result.note,
       });
     }
-}
-return positions
+  }
+
+  return positions;
 });
+
 
 function displayNote(note) {
   return accidentalMode.value === "flat" ? toggleAccidental(note, "flat") : note;
