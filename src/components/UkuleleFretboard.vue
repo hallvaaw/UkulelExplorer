@@ -18,7 +18,7 @@
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
             <div class="px-3 pr-6 py-1.5 rounded-full z-0 bg-green-800"
               :class="[{'bg-yellow-600 rounded-md': firstChordPositions.some( p => p.stringIndex === stringIndex && p.fretIndex === fret)}, {'bg-red-600 rounded-md': displayChordNotes.includes(stri[i])}]"
-              >{{ accidentalMode === "flat" ? toggleAccidental(stri[i], "flat") : stri[i] }}</div>
+              >{{ displayNote(stri[i]) }}</div>
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
             <!--{{ stri[i] }}</div></!-->
           </div>
@@ -187,6 +187,10 @@ for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
 return positions
 });
 
+function displayNote(note) {
+  return accidentalMode.value === "flat" ? toggleAccidental(note, "flat") : note;
+}
+
 const displayChordNotes = computed(() => {
   return toggleAccidentals(chordNotes.value, accidentalMode.value === "flat" ? "flat" : "sharp");
 });
@@ -282,22 +286,7 @@ let baseTunings = reactive({
 });
 
 function toggleMode() {
-
-    if (accidentalMode.value === "sharp") {
-        accidentalMode.value = "flat"
-    }
-    else {
-        accidentalMode.value = "sharp"
-    }
-
-  NOTES = toggleAccidentals(NOTES, accidentalMode.value)
-
-  STRINGS.value = [
-    toggleAccidentals(A_STRING.value, accidentalMode.value),
-    toggleAccidentals(E_STRING.value, accidentalMode.value),
-    toggleAccidentals(C_STRING.value, accidentalMode.value),
-    toggleAccidentals(G_STRING.value, accidentalMode.value),
-  ];
+    accidentalMode.value = accidentalMode.value === "sharp" ? "flat" : "sharp";
 }
 
 const mainTunings = {
@@ -384,6 +373,7 @@ function tuneString(name, direction = "up", tuneSet) {
     C_STRING.value,
     G_STRING.value,
   ];
+  console.log(NOTES)
 
 }
 </script>
