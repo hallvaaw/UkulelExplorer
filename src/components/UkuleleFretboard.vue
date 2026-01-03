@@ -20,7 +20,6 @@
               :class="[{'bg-yellow-600 rounded-md': firstChordPositions.some( p => p.stringIndex === stringIndex && p.fretIndex === fret)}, {'bg-red-600 rounded-md': allChordPositions.some( p => p.stringIndex === stringIndex && p.fretIndex === fret)}]"
               >{{ displayNote(stri[i]) }}</div>
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
-            <!--{{ stri[i] }}</div></!-->
           </div>
         </div>
       </div>
@@ -35,7 +34,7 @@
         </div>
         <div class="flex flex-col">
             <div class="flex space-x-6">
-                <div v-for="(tone, i) in NOTES" :key="i">
+                <div v-for="(tone, i) in displayToggledTones" :key="i">
                     <button @click="setTone(tone)" :class="['bg-blue-600 w-14 h-14 font-bold items-center rounded hover:bg-blue-700 ml-2', selectedChord === normalizeToSharp(tone) ? 'bg-green-200 text-black font-bold' : 'text-blue-200']">{{ tone }} </button>
                 </div>
             </div>
@@ -57,13 +56,16 @@
 import { ref, onMounted, onUnmounted, computed, reactive } from 'vue'
 import { CHORD_LIBRARY } from '../chordLibrary.js'
 
-let NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+const TOGGLED_NOTES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
 const NOTES_PER_OCTAVE = NOTES.length;
 const STRING_NOTES = ["A", "E", "C", "G"]
 const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug"]
 const FLATS = ["Db", "Eb", "Gb", "Ab", "Bb"]
 const SHARPS = ["C#", "D#", "F#", "G#","A#"]
+
 let accidentalMode = ref("flat")
+let renderFlats = ref(false);
 // toggleAccidentals(NOTES, accidentalMode.value === "flat" ? "flat" : "sharp")
 
 function convertNote(note, mode) {
@@ -212,6 +214,12 @@ const displayChordNotes = computed(() => {
   return toggleAccidentals(chordNotes.value, accidentalMode.value === "flat" ? "flat" : "sharp");
 });
 
+const renderNotes = computed(() => !renderFlats.value)
+
+const displayToggledTones = computed(() => {
+  return renderFlats.value ? TOGGLED_NOTES : NOTES
+});
+
 let tuningValue = ref(0);
 
 function noteAt(index) {
@@ -304,6 +312,7 @@ let baseTunings = reactive({
 
 function toggleMode() {
     accidentalMode.value = accidentalMode.value === "sharp" ? "flat" : "sharp";
+    renderFlats.value = !renderFlats.value
 }
 
 const mainTunings = {
