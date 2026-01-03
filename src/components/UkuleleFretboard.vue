@@ -17,7 +17,7 @@
           <div v-for="(fret, i) in NUM_FRETS" :key="i" class="grid grid-cols-3 text-white shrink-0 font-bold py-2 w-25 border-r border-neutral-400 text-center items-center">
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
             <div class="px-3 pr-6 py-1.5 rounded-full z-0 bg-green-800"
-              :class="[{'bg-yellow-600 rounded-md': firstChordPositions.some( p => p.stringIndex === stringIndex && p.fretIndex === fret)}, {'bg-red-600 rounded-md': displayChordNotes.includes(stri[i])}]"
+              :class="[{'bg-yellow-600 rounded-md': firstChordPositions.some( p => p.stringIndex === stringIndex && p.fretIndex === fret)}, {'bg-red-600 rounded-md': allChordPositions.some( p => p.stringIndex === stringIndex && p.fretIndex === fret)}]"
               >{{ displayNote(stri[i]) }}</div>
             <div class="h-[1px] bg-neutral-500" :class="{'bg-neutral-900' : i === 0}"></div>
             <!--{{ stri[i] }}</div></!-->
@@ -163,37 +163,11 @@ const chordNotes = computed(() => {
   );
 });
 
-
-// const firstChordPositions = computed(() => {
-//   if (!selectedChord.value || !selectedSubChord.value) return [];
-// 
-//   const chordNotes = CHORD_LIBRARY[selectedChord.value][selectedSubChord.value];
-//   const remainingNotes = [...chordNotes];
-//   const positions = []
-// 
-//     for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
-//       const result = findFirstOnString(
-//         STRINGS.value[stringIndex],
-//         remainingNotes,
-//         chordNotes
-//       );
-//     
-//       if (result) {
-//         positions.push({
-//           stringIndex,
-//           fretIndex: result.fretIndex,
-//           note: result.note,
-//         });
-//       }
-//     }
-//     return positions
-// });
-
 const firstChordPositions = computed(() => {
   if (!selectedChord.value || !selectedSubChord.value) return [];
 
   const chordNotes = CHORD_LIBRARY[selectedChord.value][selectedSubChord.value];
-  const remainingNotes = [...chordNotes]; // fresh copy
+  const remainingNotes = [...chordNotes];
   const positions = [];
 
   for (let stringIndex = 0; stringIndex < STRINGS.value.length; stringIndex++) {
@@ -215,6 +189,20 @@ const firstChordPositions = computed(() => {
   return positions;
 });
 
+const allChordPositions = computed(() => {
+  const notes = chordNotes.value;
+  const positions = [];
+
+  STRINGS.value.forEach((string, stringIndex) => {
+    string.forEach((note, fretIndex) => {
+      if (notes.includes(note)) {
+        positions.push({ stringIndex, fretIndex });
+      }
+    });
+  });
+
+  return positions;
+});
 
 function displayNote(note) {
   return accidentalMode.value === "flat" ? toggleAccidental(note, "flat") : note;
