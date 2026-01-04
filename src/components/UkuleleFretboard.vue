@@ -57,11 +57,11 @@ import { ref, onMounted, onUnmounted, computed, reactive } from 'vue'
 import { CHORD_LIBRARY } from '../chordLibrary.js'
 
 const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
-const TOGGLED_NOTES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+const TOGGLED_NOTES = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
 const NOTES_PER_OCTAVE = NOTES.length;
 const STRING_NOTES = ["A", "E", "C", "G"]
 const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug"]
-const FLATS = ["Db", "Eb", "Gb", "Ab", "Bb"]
+const FLATS = ["D♭", "E♭", "G♭", "A♭", "B♭"]
 const SHARPS = ["C#", "D#", "F#", "G#","A#"]
 
 let accidentalMode = ref("flat")
@@ -131,14 +131,18 @@ function setTone(c) {
 
 function findFirstOnString(stringNotes, remainingNotes, allChordNotes) {
   const chordSet = allChordNotes
+  let diff;
   for (let fretIndex = 0; fretIndex < stringNotes.length; fretIndex++) {
 
     const note = stringNotes[fretIndex];
     const noteIndex = remainingNotes.indexOf(note);
-        if (noteIndex !== -1) {
-          remainingNotes.splice(noteIndex, 1);
-          return { fretIndex, note }
-        }
+    if (noteIndex !== -1) {
+      remainingNotes.splice(noteIndex, 1);
+      // diff = fretIndex[n] - fretIndex[n-1]
+      // if (diff > 2)
+      console.log(note)
+      return { fretIndex, note }
+    }
   }
     for (let fretIndex = 0; fretIndex < stringNotes.length; fretIndex++) {
         const note = stringNotes[fretIndex];
