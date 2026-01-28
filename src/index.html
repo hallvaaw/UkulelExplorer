@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guitar Fretboard</title>
+<title>Ukulele Fretboard</title>
+<script type="module" src="./main.js"></script>
 <style>
-  /* Minimal Tailwind-like classes for demo */
-  .container { padding: 0.5rem; color: white; font-family: sans-serif; }
+  body { background: #111; color: white; font-family: sans-serif; }
   .flex { display: flex; }
   .flex-col { flex-direction: column; }
   .items-center { align-items: center; }
@@ -29,40 +29,25 @@
   .w-25 { width: 6rem; }
   .text-end { text-align: right; }
   .text-center { text-align: center; }
-  /* Add more classes as needed */
 </style>
 </head>
-<body class="bg-gray-900">
+<body>
 
 <div class="container p-2">
 
-  <!-- Fret Numbers -->
   <div class="overflow-x-auto">
     <div id="fret-numbers" class="flex ml-16"></div>
-
-    <!-- Strings -->
     <div id="strings-container" class="flex flex-col"></div>
   </div>
 
-  <!-- Tuning Buttons -->
-  <div id="buttons" class="flex space-x-7 mt-4 shrink-0 overflow-x-auto">
-    <div id="tuning-buttons" class="flex flex-col"></div>
+  <div id="tuning-buttons" class="flex flex-col mt-4"></div>
 
-    <!-- Tone / Subtone Buttons -->
-    <div class="flex flex-col">
-      <div id="tone-buttons" class="flex space-x-6"></div>
-      <div id="subtone-buttons" class="flex space-x-6 justify-center"></div>
-    </div>
-  </div>
+  <div id="tone-buttons" class="flex space-x-6 mt-4"></div>
+  <div id="subtone-buttons" class="flex space-x-6 mt-2"></div>
 
-  <!-- Display Chord Notes -->
-  <div id="chord-notes" class="flex space-x-6 h-6"></div>
-
-  <!-- Mode Toggle -->
-  <button id="toggle-mode" class="bg-blue-600 ml-2 p-4 rounded-sm hover:bg-blue-500">#/b</button>
+  <div id="chord-notes" class="flex space-x-6 mt-4"></div>
 
 </div>
-<script src="main.js"></script>
+
 </body>
 </html>
-
