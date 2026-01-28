@@ -1,39 +1,68 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tauri App</title>
-    <script type="module" src="/main.js" defer></script>
-  </head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guitar Fretboard</title>
+<style>
+  /* Minimal Tailwind-like classes for demo */
+  .container { padding: 0.5rem; color: white; font-family: sans-serif; }
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .items-center { align-items: center; }
+  .justify-center { justify-content: center; }
+  .cursor-default { cursor: default; }
+  .overflow-x-auto { overflow-x: auto; }
+  .border-r { border-right: 1px solid #555; }
+  .rounded { border-radius: 0.25rem; }
+  .bg-blue-600 { background-color: #2563eb; }
+  .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
+  .bg-green-800 { background-color: #065f46; }
+  .bg-red-600 { background-color: #dc2626; }
+  .bg-yellow-600 { background-color: #ca8a04; }
+  .text-white { color: white; }
+  .font-bold { font-weight: bold; }
+  .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+  .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+  .mx-1 { margin-left: 0.25rem; margin-right: 0.25rem; }
+  .ml-16 { margin-left: 4rem; }
+  .w-25 { width: 6rem; }
+  .text-end { text-align: right; }
+  .text-center { text-align: center; }
+  /* Add more classes as needed */
+</style>
+</head>
+<body class="bg-gray-900">
 
-  <body>
-    <main class="container">
-      <h1>Welcome to Tauri</h1>
+<div class="container p-2">
 
-      <div class="row">
-        <a href="https://tauri.app" target="_blank">
-          <img src="/assets/tauri.svg" class="logo tauri" alt="Tauri logo" />
-        </a>
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-          target="_blank"
-        >
-          <img
-            src="/assets/javascript.svg"
-            class="logo vanilla"
-            alt="JavaScript logo"
-          />
-        </a>
-      </div>
-      <p>Click on the Tauri logo to learn more about the framework</p>
+  <!-- Fret Numbers -->
+  <div class="overflow-x-auto">
+    <div id="fret-numbers" class="flex ml-16"></div>
 
-      <form class="row" id="greet-form">
-        <input id="greet-input" placeholder="Enter a name..." />
-        <button type="submit">Greet</button>
-      </form>
-      <p id="greet-msg"></p>
-    </main>
-  </body>
+    <!-- Strings -->
+    <div id="strings-container" class="flex flex-col"></div>
+  </div>
+
+  <!-- Tuning Buttons -->
+  <div id="buttons" class="flex space-x-7 mt-4 shrink-0 overflow-x-auto">
+    <div id="tuning-buttons" class="flex flex-col"></div>
+
+    <!-- Tone / Subtone Buttons -->
+    <div class="flex flex-col">
+      <div id="tone-buttons" class="flex space-x-6"></div>
+      <div id="subtone-buttons" class="flex space-x-6 justify-center"></div>
+    </div>
+  </div>
+
+  <!-- Display Chord Notes -->
+  <div id="chord-notes" class="flex space-x-6 h-6"></div>
+
+  <!-- Mode Toggle -->
+  <button id="toggle-mode" class="bg-blue-600 ml-2 p-4 rounded-sm hover:bg-blue-500">#/b</button>
+
+</div>
+<script src="main.js"></script>
+</body>
 </html>
+
