@@ -265,7 +265,26 @@ STRINGS.forEach((notes, stringIndex) => {
     p.classList.add('text-white')
   }
 
-  row.appendChild(p)
+  const downBtn = document.createElement('button')
+  downBtn.textContent = '←'
+  downBtn.className =
+    'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mr-1'
+
+  downBtn.addEventListener('click', () => {
+    tuneString(tuningKeys[stringIndex], 'down', tuning)
+  })
+
+  const upBtn = document.createElement('button')
+  upBtn.textContent = '→'
+  upBtn.className =
+    'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1'
+
+  upBtn.addEventListener('click', () => {
+    tuneString(tuningKeys[stringIndex], 'up', tuning)
+  })
+
+  row.append(p, downBtn, upBtn)
+
 
   notes.forEach(note=>{
     const div = document.createElement('div');
@@ -273,5 +292,6 @@ STRINGS.forEach((notes, stringIndex) => {
     div.className='w-25 text-center border-r py-2';
     row.appendChild(div);
   });
+
   stringsContainer.appendChild(row);
 });
