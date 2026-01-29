@@ -251,49 +251,51 @@ NUM_FRETS.forEach(fret => {
   fretContainer.appendChild(div);
 });
 
-const stringsContainer = document.getElementById('strings-container');
-stringsContainer.innerHTML = ''
-
-
-
-STRINGS.forEach((notes, stringIndex) => {
-    const offset = Object.values(tuningOffsets)[stringIndex]
-    const row = document.createElement('div');
-    row.className='flex items-center';
-
-    const p = document.createElement('p');
-    p.className = 'w-2 mx-4 text-neutral-400 font-bold'
-    p.textContent = offset
-
-    if (Math.abs(offset) > 0) {
-        p.classList.add('text-white')
-    }
-
-    const downBtn = document.createElement('button')
-    downBtn.textContent = '←'
-    downBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mr-1'
-
-    downBtn.addEventListener('click', () => {
-        console.log(stringKeys[stringIndex])
-        tuneString(stringKeys[stringIndex], 'down', tuning)
-    })
-
-    const upBtn = document.createElement('button')
-    upBtn.textContent = '→'
-    upBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1'
-
-    upBtn.addEventListener('click', () => {
-        tuneString(stringKeys[stringIndex], 'up', tuning)
-    })
-
-    row.append(p, downBtn, upBtn)
-
-    notes.forEach(note => {
-        const div = document.createElement('div');
-        div.textContent = toggleAccidentals(note, accidentalMode);
-        div.className='w-25 text-center border-r py-2';
-        row.appendChild(div);
+function renderStrings() {
+    const stringsContainer = document.getElementById('strings-container');
+    stringsContainer.innerHTML = ''
+    
+    STRINGS.forEach((notes, stringIndex) => {
+        const offset = Object.values(tuningOffsets)[stringIndex]
+        const row = document.createElement('div');
+        row.className='flex items-center';
+    
+        const p = document.createElement('p');
+        p.className = 'w-2 mx-4 text-neutral-400 font-bold'
+        p.textContent = offset
+    
+        if (Math.abs(offset) > 0) {
+            p.classList.add('text-white')
+        }
+    
+        const downBtn = document.createElement('button')
+        downBtn.textContent = '←'
+        downBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mr-1'
+    
+        downBtn.addEventListener('click', () => {
+            tuneString(stringKeys[stringIndex], 'down', tuning)
+            renderStrings()
+        })
+    
+        const upBtn = document.createElement('button')
+        upBtn.textContent = '→'
+        upBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1'
+    
+        upBtn.addEventListener('click', () => {
+            tuneString(stringKeys[stringIndex], 'up', tuning)
+            renderStrings()
+        })
+    
+        row.append(p, downBtn, upBtn)
+    
+        notes.forEach(note => {
+            const div = document.createElement('div');
+            div.textContent = toggleAccidentals(note, accidentalMode);
+            div.className='w-25 text-center border-r py-2';
+            row.appendChild(div);
+        });
+    
+        stringsContainer.appendChild(row);
     });
-
-    stringsContainer.appendChild(row);
-});
+}
+renderStrings()
