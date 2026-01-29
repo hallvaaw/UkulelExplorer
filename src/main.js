@@ -7,6 +7,7 @@ const FLATS = ["D♭","E♭","G♭","A♭","B♭"];
 const SHARPS = ["C#","D#","F#","G#","A#"];
 const NUM_FRETS = Array.from({ length:13 }, (_,i) => i);
 const stringNames = ['A_STRING', 'E_STRING', 'C_STRING', 'G_STRING'];
+const stringKeys = ['A', 'E', 'C', 'G'];
 
 let accidentalMode = "flat";
 let renderFlats = false;
@@ -208,13 +209,14 @@ function tuneFAsDG() {
 }
 
 function tuneString(name, direction = "up", tuneSet) {
-  tuningOffsets.value[name] += direction === "up" ? 1 : -1;
-  tuningValues.value[name] += direction === "up" ? 1 : -1;
-  if (Math.abs(tuningOffsets.value[name]) === 12) {
-        tuningOffsets.value[name] = 0
+  console.log(tuningOffsets[name])
+  tuningOffsets[name] += direction === "up" ? 1 : -1;
+  tuningValues[name] += direction === "up" ? 1 : -1;
+  if (Math.abs(tuningOffsets[name]) === 12) {
+        tuningOffsets[name] = 0
   }
 
-  const newStart = baseTunings[name] + tuningOffsets.value[name];
+  const newStart = baseTunings[name] + tuningOffsets[name];
 
   switch (name) {
     case "A":
@@ -252,46 +254,46 @@ NUM_FRETS.forEach(fret => {
 const stringsContainer = document.getElementById('strings-container');
 stringsContainer.innerHTML = ''
 
+
+
 STRINGS.forEach((notes, stringIndex) => {
-  const offset = Object.values(tuningOffsets)[stringIndex]
-  const row = document.createElement('div');
-  row.className='flex items-center';
+    const offset = Object.values(tuningOffsets)[stringIndex]
+    const row = document.createElement('div');
+    row.className='flex items-center';
 
-  const p = document.createElement('p');
-  p.className = 'w-2 mx-4 text-neutral-400 font-bold'
-  p.textContent = offset
+    const p = document.createElement('p');
+    p.className = 'w-2 mx-4 text-neutral-400 font-bold'
+    p.textContent = offset
 
-  if (Math.abs(offset) > 0) {
-    p.classList.add('text-white')
-  }
+    if (Math.abs(offset) > 0) {
+        p.classList.add('text-white')
+    }
 
-  const downBtn = document.createElement('button')
-  downBtn.textContent = '←'
-  downBtn.className =
-    'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mr-1'
+    const downBtn = document.createElement('button')
+    downBtn.textContent = '←'
+    downBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mr-1'
 
-  downBtn.addEventListener('click', () => {
-    tuneString(tuningKeys[stringIndex], 'down', tuning)
-  })
+    downBtn.addEventListener('click', () => {
+        console.log(stringKeys[stringIndex])
+        tuneString(stringKeys[stringIndex], 'down', tuning)
+    })
 
-  const upBtn = document.createElement('button')
-  upBtn.textContent = '→'
-  upBtn.className =
-    'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1'
+    const upBtn = document.createElement('button')
+    upBtn.textContent = '→'
+    upBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1'
 
-  upBtn.addEventListener('click', () => {
-    tuneString(tuningKeys[stringIndex], 'up', tuning)
-  })
+    upBtn.addEventListener('click', () => {
+        tuneString(stringKeys[stringIndex], 'up', tuning)
+    })
 
-  row.append(p, downBtn, upBtn)
+    row.append(p, downBtn, upBtn)
 
+    notes.forEach(note => {
+        const div = document.createElement('div');
+        div.textContent = toggleAccidentals(note, accidentalMode);
+        div.className='w-25 text-center border-r py-2';
+        row.appendChild(div);
+    });
 
-  notes.forEach(note=>{
-    const div = document.createElement('div');
-    div.textContent = toggleAccidentals(note, accidentalMode);
-    div.className='w-25 text-center border-r py-2';
-    row.appendChild(div);
-  });
-
-  stringsContainer.appendChild(row);
+    stringsContainer.appendChild(row);
 });
