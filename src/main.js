@@ -241,18 +241,32 @@ function tuneString(name, direction = "up", tuneSet) {
 }
 
 const fretContainer = document.getElementById('fret-numbers');
-NUM_FRETS.forEach(fret=>{
+NUM_FRETS.forEach(fret => {
   const div = document.createElement('div');
   div.className = 'grid text-neutral-300 shrink-0 py-2 w-25 text-end';
-  if([3,5,7,10].includes(fret)) div.classList.add('font-bold','text-white','text-xl');
+  if ([3,5,7,10].includes(fret)) div.classList.add('font-bold','text-white','text-xl');
   div.textContent = fret;
   fretContainer.appendChild(div);
 });
 
 const stringsContainer = document.getElementById('strings-container');
-STRINGS.forEach((notes,stringIndex)=>{
+stringsContainer.innerHTML = ''
+
+STRINGS.forEach((notes, stringIndex) => {
+  const offset = Object.values(tuningOffsets)[stringIndex]
   const row = document.createElement('div');
   row.className='flex items-center';
+
+  const p = document.createElement('p');
+  p.className = 'w-2 mx-4 text-neutral-400 font-bold'
+  p.textContent = offset
+
+  if (Math.abs(offset) > 0) {
+    p.classList.add('text-white')
+  }
+
+  row.appendChild(p)
+
   notes.forEach(note=>{
     const div = document.createElement('div');
     div.textContent = toggleAccidentals(note, accidentalMode);
