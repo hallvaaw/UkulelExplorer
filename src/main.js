@@ -76,7 +76,7 @@ let tuningValue = null;
 function noteAt(index){ return NOTES[(index + NOTES.length) % NOTES.length]; }
 
 function stringNotes(frets, startIndex){
-  const notes=[];
+  let notes = [];
   for (let i = startIndex;i < startIndex+frets; i++) notes.push(noteAt(i));
   return notes;
 }
@@ -113,13 +113,13 @@ function displayGString() {
 }
 
 let STRINGS = [
-  A_STRING.value,
-  E_STRING.value,
-  C_STRING.value,
-  G_STRING.value,
+  A_STRING,
+  E_STRING,
+  C_STRING,
+  G_STRING,
 ];
 
-const STRING_OBJECTS = {
+let STRING_OBJECTS = {
   A: A_STRING,
   E: E_STRING,
   C: C_STRING,
@@ -163,50 +163,57 @@ const mainTunings = {
 
 function tuneFunction(tuningData) {
   for (const [key, value] of Object.entries(tuningData)) {
-    STRING_OBJECTS[key].value = stringNotes(14, value);
-  }
+    const notes = stringNotes(14, value)
 
-  STRINGS.value = [
-    A_STRING.value,
-    E_STRING.value,
-    C_STRING.value,
-    G_STRING.value,
-  ];
+    switch (key) {
+      case "A":
+        A_STRING = notes
+        break
+      case "E":
+        E_STRING = notes
+        break
+      case "C":
+        C_STRING = notes
+        break
+      case "G":
+        G_STRING = notes
+        break
+    }
 
-  for (const [key, value_] of Object.entries(tuningData)) {
-    baseTunings[key] = value_
+    baseTunings[key] = value
     tuningOffsets[key] = 0
     tuningValues[key] = 0
   }
 
+  STRINGS = [
+    A_STRING,
+    E_STRING,
+    C_STRING,
+    G_STRING,
+  ]
+
   accidentalMode = "sharp"
+  renderStrings()
 }
 
-function tuneGCEA() {
-  const tuningData = mainTunings["GCEA"]
-  tuning = "GCEA";
-  tuneFunction(tuningData)
+function tuneTo(tuningName) {
+    const tuningData = mainTunings[tuningName]
+    tuning = tuningName
+    tuneFunction(tuningData)
 }
 
-tuneGCEA();
+tuneTo("GCEA")
 
-function tuneDGBE() {
-  const tuningData = mainTunings["DGBE"]
-  tuning = "DGBE";
-  tuneFunction(tuningData)
-}
+const tuningButtons = document.getElementById("tuning-buttons");
 
-function tuneADFsB() {
-  const tuningData = mainTunings["ADFsB"]
-  tuning = "ADFsB";
-  tuneFunction(tuningData)
-}
-
-function tuneFAsDG() {
-  const tuningData = mainTunings["FAsDG"]
-  tuning = "FAsDG";
-  tuneFunction(tuningData)
-}
+Object.keys(mainTunings).forEach(tuning => {
+    const tuningButton = document.createElement('button')
+    tuningButton.textContent = tuning
+    tuningButton.addEventListener("click", () => {
+        tuneTo(tuning)
+    })
+    tuningButtons.appendChild(tuningButton)
+})
 
 function tuneString(name, direction = "up", tuneSet) {
   tuningOffsets[name] += direction === "up" ? 1 : -1;
@@ -308,10 +315,6 @@ function renderStrings() {
     
         stringsContainer.appendChild(row);
     });
-}
-
-function render() {
-    renderStrings()
 }
 
 renderStrings()
