@@ -209,7 +209,6 @@ function tuneFAsDG() {
 }
 
 function tuneString(name, direction = "up", tuneSet) {
-  console.log(tuningOffsets[name])
   tuningOffsets[name] += direction === "up" ? 1 : -1;
   tuningValues[name] += direction === "up" ? 1 : -1;
   if (Math.abs(tuningOffsets[name]) === 12) {
@@ -220,16 +219,16 @@ function tuneString(name, direction = "up", tuneSet) {
 
   switch (name) {
     case "A":
-      A_STRING.value = stringNotes(14, newStart);
+      A_STRING = stringNotes(14, newStart);
       break;
     case "E":
-      E_STRING.value = stringNotes(14, newStart);
+      E_STRING = stringNotes(14, newStart);
       break;
     case "C":
-      C_STRING.value = stringNotes(14, newStart);
+      C_STRING = stringNotes(14, newStart);
       break;
     case "G":
-      G_STRING.value = stringNotes(14, newStart);
+      G_STRING = stringNotes(14, newStart);
       break;
   }
 
@@ -251,12 +250,24 @@ NUM_FRETS.forEach(fret => {
   fretContainer.appendChild(div);
 });
 
+function getStrings() {
+  return [
+    A_STRING,
+    E_STRING,
+    C_STRING,
+    G_STRING,
+  ]
+}
+
 function renderStrings() {
     const stringsContainer = document.getElementById('strings-container');
     stringsContainer.innerHTML = ''
-    
-    STRINGS.forEach((notes, stringIndex) => {
-        const offset = Object.values(tuningOffsets)[stringIndex]
+
+    const strings = getStrings()
+
+    strings.forEach((notes, stringIndex) => {
+        const key = stringKeys[stringIndex]
+        const offset = tuningOffsets[key]
         const row = document.createElement('div');
         row.className='flex items-center';
     
@@ -289,13 +300,18 @@ function renderStrings() {
         row.append(p, downBtn, upBtn)
     
         notes.forEach(note => {
-            const div = document.createElement('div');
-            div.textContent = toggleAccidentals(note, accidentalMode);
-            div.className='w-25 text-center border-r py-2';
-            row.appendChild(div);
+            const cell = document.createElement('div');
+            cell.textContent = toggleAccidentals(note, accidentalMode);
+            cell.className='w-25 text-center border-r py-2';
+            row.appendChild(cell);
         });
     
         stringsContainer.appendChild(row);
     });
 }
+
+function render() {
+    renderStrings()
+}
+
 renderStrings()
