@@ -56,12 +56,12 @@ function normalizeToSharp(note){
 }
 
 function setTone(c) {
-    selectedChord.value = normalizeToSharp(c)
+    selectedChord = normalizeToSharp(c)
     return selectedChord
 }
 
 function setChord(d) {
-    selectedSubChord.value = d
+    selectedSubChord = d
 
     return selectedChord, selectedSubChord
 }
@@ -73,11 +73,37 @@ function chordNotes(){
 
 let tuningValue = null;
 
+function getAllChordPositions() {
+  const notes = chordNotes()
+  const positions = []
+
+  STRINGS.forEach((string, stringIndex) => {
+    string.forEach((note, fretIndex) => {
+      if (notes.includes(note)) {
+        positions.push({ stringIndex, fretIndex })
+      }
+    })
+  })
+
+  return positions
+}
+
+function getDisplayChordNotes() {
+  return toggleAccidentals(
+    chordNotes(),
+    accidentalMode === "flat" ? "flat" : "sharp"
+  )
+}
+
+function getDisplayToggledTones() {
+  return renderFlats ? TOGGLED_NOTES : NOTES
+}
+
 function noteAt(index){ return NOTES[(index + NOTES.length) % NOTES.length]; }
 
 function stringNotes(frets, startIndex){
   let notes = [];
-  for (let i = startIndex;i < startIndex+frets; i++) notes.push(noteAt(i));
+  for (let i = startIndex; i < startIndex+frets; i++) notes.push(noteAt(i));
   return notes;
 }
 
@@ -204,6 +230,17 @@ function tuneTo(tuningName) {
 
 tuneTo("GCEA")
 
+const toneButtons = document.getElementById("tuning-buttons");
+for (const tone of NOTES) {
+    const toneButton = document.createElement('button')
+    toneButton.textContent = tone
+    toneButton.addEventListener("click", () => {
+        setTone(tone)
+    })
+    toneButtons.appendChild(toneButton)
+}
+
+
 const tuningButtons = document.getElementById("tuning-buttons");
 
 Object.keys(mainTunings).forEach(tuning => {
@@ -317,4 +354,12 @@ function renderStrings() {
     });
 }
 
-renderStrings()
+function render() {
+    const allChordPositions = getAllChordPositions()
+    const displayChordNotes = getDisplayChordNotes()
+    const displayToggledTones = getDisplayToggledTones()
+
+    renderStrings()
+}
+
+render()
