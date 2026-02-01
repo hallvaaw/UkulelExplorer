@@ -5,6 +5,7 @@ const NOTES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
 const TOGGLED_NOTES = ["C","D♭","D","E♭","E","F","G♭","G","A♭","A","B♭","B"];
 const FLATS = ["D♭","E♭","G♭","A♭","B♭"];
 const SHARPS = ["C#","D#","F#","G#","A#"];
+const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug"]
 const NUM_FRETS = Array.from({ length:13 }, (_,i) => i);
 const stringNames = ['A_STRING', 'E_STRING', 'C_STRING', 'G_STRING'];
 const stringKeys = ['A', 'E', 'C', 'G'];
@@ -230,7 +231,7 @@ function tuneTo(tuningName) {
 
 tuneTo("GCEA")
 
-const toneButtons = document.getElementById("tuning-buttons");
+const toneButtons = document.getElementById("tone-buttons");
 for (const tone of NOTES) {
     const toneButton = document.createElement('button')
     toneButton.textContent = tone
@@ -238,6 +239,16 @@ for (const tone of NOTES) {
         setTone(tone)
     })
     toneButtons.appendChild(toneButton)
+}
+
+const subToneButtons = document.getElementById("subtone-buttons");
+for (const subTone of SUBNOTES) {
+    const subToneButton = document.createElement('button')
+    subToneButton.textContent = subTone
+    subToneButton.addEventListener("click", () => {
+        setTone(subTone)
+    })
+    subToneButtons.appendChild(subToneButton)
 }
 
 
