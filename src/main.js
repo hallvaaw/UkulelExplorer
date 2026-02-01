@@ -63,6 +63,7 @@ function setTone(c) {
 
 function setChord(d) {
     selectedSubChord = d
+    console.log(selectedChord, selectedSubChord)
 
     return selectedChord, selectedSubChord
 }
@@ -246,11 +247,10 @@ for (const subTone of SUBNOTES) {
     const subToneButton = document.createElement('button')
     subToneButton.textContent = subTone
     subToneButton.addEventListener("click", () => {
-        setTone(subTone)
+        setChord(subTone)
     })
     subToneButtons.appendChild(subToneButton)
 }
-
 
 const tuningButtons = document.getElementById("tuning-buttons");
 
@@ -314,11 +314,13 @@ function getStrings() {
   ]
 }
 
+
 function renderStrings() {
     const stringsContainer = document.getElementById('strings-container');
     stringsContainer.innerHTML = ''
 
     const strings = getStrings()
+    const allChordPositions = getAllChordPositions()
 
     strings.forEach((notes, stringIndex) => {
         const key = stringKeys[stringIndex]
@@ -359,6 +361,14 @@ function renderStrings() {
             cell.textContent = toggleAccidentals(note, accidentalMode);
             cell.className='w-25 text-center border-r py-2';
             row.appendChild(cell);
+
+            const isChord = allChordPositions.some(
+              p => p.stringIndex === stringIndex && p.fretIndex === fret
+            )
+            
+            if (isChord) {
+              cell.classList.add('bg-red-600', 'rounded-md')
+            }
         });
     
         stringsContainer.appendChild(row);
@@ -366,7 +376,6 @@ function renderStrings() {
 }
 
 function render() {
-    const allChordPositions = getAllChordPositions()
     const displayChordNotes = getDisplayChordNotes()
     const displayToggledTones = getDisplayToggledTones()
 
