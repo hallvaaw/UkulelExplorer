@@ -63,7 +63,6 @@ function setTone(c) {
 
 function setChord(d) {
     selectedSubChord = d
-    console.log(selectedChord, selectedSubChord)
 
     return selectedChord, selectedSubChord
 }
@@ -232,6 +231,14 @@ function tuneTo(tuningName) {
 
 tuneTo("GCEA")
 
+const toggleModeEl = document.getElementById("toggle-mode");
+const toggleButton = document.createElement('button')
+toggleButton.textContent = "#/♭"
+toggleButton.addEventListener("click", () => {
+    toggleMode()
+})
+toggleModeEl.appendChild(toggleButton)
+
 const toneButtons = document.getElementById("tone-buttons");
 for (const tone of NOTES) {
     const toneButton = document.createElement('button')
@@ -286,14 +293,6 @@ function tuneString(name, direction = "up", tuneSet) {
       G_STRING = stringNotes(14, newStart);
       break;
   }
-
-  STRINGS.value = [
-    A_STRING.value,
-    E_STRING.value,
-    C_STRING.value,
-    G_STRING.value,
-  ];
-
 }
 
 const fretContainer = document.getElementById('fret-numbers');
@@ -313,7 +312,6 @@ function getStrings() {
     G_STRING,
   ]
 }
-
 
 function renderStrings() {
     const stringsContainer = document.getElementById('strings-container');
@@ -360,7 +358,6 @@ function renderStrings() {
             const cell = document.createElement('div');
             cell.textContent = toggleAccidentals(note, accidentalMode);
             cell.className='w-25 text-center border-r py-2';
-            row.appendChild(cell);
 
             const isChord = allChordPositions.some(
               p => p.stringIndex === stringIndex && p.fretIndex === fret
@@ -369,6 +366,7 @@ function renderStrings() {
             if (isChord) {
               cell.classList.add('bg-red-600', 'rounded-md')
             }
+            row.appendChild(cell);
         });
     
         stringsContainer.appendChild(row);
