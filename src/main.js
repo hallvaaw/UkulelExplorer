@@ -10,7 +10,7 @@ const NUM_FRETS = Array.from({ length:13 }, (_,i) => i);
 const stringNames = ['A_STRING', 'E_STRING', 'C_STRING', 'G_STRING'];
 const stringKeys = ['A', 'E', 'C', 'G'];
 
-let accidentalMode = "flat";
+let accidentalMode = "sharp";
 let renderFlats = false;
 let tuning = "GCEA";
 
@@ -177,8 +177,9 @@ function getBaseTunings() {
 const baseTunings = getBaseTunings()
 
 function toggleMode() {
-    accidentalMode.value = accidentalMode.value === "sharp" ? "flat" : "sharp";
-    renderFlats.value = !renderFlats.value
+    accidentalMode = accidentalMode === "sharp" ? "flat" : "sharp";
+    renderFlats = !renderFlats
+    render()
 }
 
 const mainTunings = {
@@ -219,7 +220,6 @@ function tuneFunction(tuningData) {
     G_STRING,
   ]
 
-  accidentalMode = "sharp"
   renderStrings()
 }
 
