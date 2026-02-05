@@ -92,7 +92,7 @@ function getAllChordPositions() {
 function getDisplayChordNotes() {
   return toggleAccidentals(
     chordNotes(),
-    accidentalMode === "flat" ? "flat" : "sharp"
+    accidentalMode === "flat" ? "flat" : "sharp",
   )
 }
 
@@ -145,13 +145,6 @@ let STRINGS = [
   C_STRING,
   G_STRING,
 ];
-
-let STRING_OBJECTS = {
-  A: A_STRING,
-  E: E_STRING,
-  C: C_STRING,
-  G: G_STRING
-};
 
 function tuneStart(){
   A_STRING = stringNotes(14, 9);
@@ -313,6 +306,13 @@ function getStrings() {
   ]
 }
 
+function isChordAt(positions, stringIndex, fretIndex) {
+  return positions.some(
+    p => p.stringIndex === stringIndex && p.fretIndex === fretIndex
+  )
+}
+
+
 function renderStrings() {
     const stringsContainer = document.getElementById('strings-container');
     stringsContainer.innerHTML = ''
@@ -354,18 +354,19 @@ function renderStrings() {
     
         row.append(p, downBtn, upBtn)
     
-        notes.forEach(note => {
+        notes.forEach((note, fretIndex) => {
             const cell = document.createElement('div');
             cell.textContent = toggleAccidentals(note, accidentalMode);
             cell.className='w-25 text-center border-r py-2';
 
             const isChord = allChordPositions.some(
-              p => p.stringIndex === stringIndex && p.fretIndex === fret
+              p => p.stringIndex === stringIndex && p.fretIndex === fretIndex
             )
-            
+
             if (isChord) {
               cell.classList.add('bg-red-600', 'rounded-md')
             }
+
             row.appendChild(cell);
         });
     
@@ -374,6 +375,7 @@ function renderStrings() {
 }
 
 function render() {
+    const allChordPositions = getAllChordPositions()
     const displayChordNotes = getDisplayChordNotes()
     const displayToggledTones = getDisplayToggledTones()
 
