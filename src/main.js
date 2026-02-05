@@ -58,11 +58,13 @@ function normalizeToSharp(note){
 
 function setTone(c) {
     selectedChord = normalizeToSharp(c)
+    renderStrings()
     return selectedChord
 }
 
 function setChord(d) {
     selectedSubChord = d
+    renderStrings()
 
     return selectedChord, selectedSubChord
 }
