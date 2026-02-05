@@ -286,6 +286,15 @@ function tuneString(name, direction = "up", tuneSet) {
       G_STRING = stringNotes(14, newStart);
       break;
   }
+
+  STRINGS = [
+    A_STRING,
+    E_STRING,
+    C_STRING,
+    G_STRING,
+  ]
+
+  renderStrings()
 }
 
 const fretContainer = document.getElementById('fret-numbers');
