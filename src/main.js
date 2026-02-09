@@ -59,12 +59,14 @@ function normalizeToSharp(note){
 function setTone(c) {
   selectedChord = normalizeToSharp(c)
   renderStrings()
+  displaySelectedNotes()
   return selectedChord
 }
 
 function setChord(d) {
   selectedSubChord = d
   renderStrings()
+  displaySelectedNotes()
 
   return selectedChord, selectedSubChord
 }
@@ -94,8 +96,21 @@ function getAllChordPositions() {
 function getDisplayChordNotes() {
   return toggleAccidentals(
     chordNotes(),
-    accidentalMode === "flat" ? "flat" : "sharp",
+    accidentalMode === "flat" ? "flat" : "sharp"
   )
+}
+
+const chordNotesEl = document.getElementById("chord-notes")
+function displaySelectedNotes() {
+    const displayChordNotes = getDisplayChordNotes()
+
+    chordNotesEl.innerHTML = ''
+
+    for (const chordNote of displayChordNotes) {
+        const noteP = document.createElement('p')
+        noteP.textContent = chordNote
+        chordNotesEl.appendChild(noteP)
+    }
 }
 
 function getDisplayToggledTones() {
@@ -114,38 +129,21 @@ let tuningOffsets = {
   A: 0,
   E: 0,
   C: 0,
-  G: 0,
+  G: 0
 }
 
 let tuningValues = {
   A: 0,
   E: 0,
   C: 0,
-  G: 0,
-}
-
-
-function displayAString() {
-  return toggleAccidentals(A_STRING, accidentalMode)
-}
-
-function displayEString() {
-  return toggleAccidentals(E_STRING, accidentalMode)
-}
-
-function displayCString() {
-  return toggleAccidentals(C_STRING, accidentalMode)
-}
-
-function displayGString() {
-  return toggleAccidentals(G_STRING, accidentalMode)
+  G: 0
 }
 
 let STRINGS = [
   A_STRING,
   E_STRING,
   C_STRING,
-  G_STRING,
+  G_STRING
 ]
 
 function tuneStart(){
@@ -165,7 +163,7 @@ function getBaseTunings() {
     A: NOTES.indexOf(A_STRING[0]),
     E: NOTES.indexOf(E_STRING[0]),
     C: NOTES.indexOf(C_STRING[0]),
-    G: NOTES.indexOf(G_STRING[0]),
+    G: NOTES.indexOf(G_STRING[0])
   }
 }
 
@@ -181,7 +179,7 @@ const mainTunings = {
    GCEA: { A: 9, E: 4, C: 0, G: 7 },
    ADFsB: { A: 11, E: 6, C: 2, G: 9 },
    DGBE: { A: 4, E: 11, C: 7, G: 2 },
-   FAsDG: { A: 7, E: 2, C: 10, G: 5 },
+   FAsDG: { A: 7, E: 2, C: 10, G: 5 }
 }
 
 function tuneFunction(tuningData) {
@@ -212,7 +210,7 @@ function tuneFunction(tuningData) {
     A_STRING,
     E_STRING,
     C_STRING,
-    G_STRING,
+    G_STRING
   ]
 
   renderStrings()
@@ -293,7 +291,7 @@ function tuneString(name, direction = "up", tuneSet) {
     A_STRING,
     E_STRING,
     C_STRING,
-    G_STRING,
+    G_STRING
   ]
 
   renderStrings()
@@ -313,7 +311,7 @@ function getStrings() {
     A_STRING,
     E_STRING,
     C_STRING,
-    G_STRING,
+    G_STRING
   ]
 }
 
@@ -322,7 +320,6 @@ function isChordAt(positions, stringIndex, fretIndex) {
     p => p.stringIndex === stringIndex && p.fretIndex === fretIndex
   )
 }
-
 
 function renderStrings() {
   const stringsContainer = document.getElementById('strings-container')
@@ -387,7 +384,7 @@ function renderStrings() {
 
 function render() {
   const allChordPositions = getAllChordPositions()
-  const displayChordNotes = getDisplayChordNotes()
+  // const displayChordNotes = getDisplayChordNotes()
   const displayToggledTones = getDisplayToggledTones()
 
   renderStrings()
