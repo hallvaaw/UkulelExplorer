@@ -37,20 +37,6 @@ function toggleAccidentals(input, mode){
   return input
 }
 
-function toggleAccidental(note, mode) {
-  if (mode === "flat" && note.includes("#")) {
-    const index = SHARPS.indexOf(note)
-    return index !== -1 ? FLATS[index] : note
-  }
-
-  if (mode === "sharp" && FLATS.includes(note)) {
-    const index = FLATS.indexOf(note)
-    return index !== -1 ? SHARPS[index] : note
-  }
-
-  return note
-}
-
 function normalizeToSharp(note){
   const index = FLATS.indexOf(note)
   return index !== -1 ? SHARPS[index] : note
