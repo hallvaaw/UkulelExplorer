@@ -322,7 +322,7 @@ function renderStrings() {
     row.className='flex items-center'
   
     const p = document.createElement('p')
-    p.className = 'w-2 mx-4 text-neutral-400 font-bold'
+    p.className = 'w-2 mx-4 text-neutral-400 font-bold tune-offset'
     p.textContent = offset
   
     if (Math.abs(offset) > 0) {
@@ -331,7 +331,7 @@ function renderStrings() {
   
     const downBtn = document.createElement('button')
     downBtn.textContent = '←'
-    downBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mr-1'
+    downBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mr-1 string-tune'
   
     downBtn.addEventListener('click', () => {
       tuneString(stringKeys[stringIndex], 'down', tuning)
@@ -340,7 +340,7 @@ function renderStrings() {
   
     const upBtn = document.createElement('button')
     upBtn.textContent = '→'
-    upBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1'
+    upBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1 string-tune'
   
     upBtn.addEventListener('click', () => {
       tuneString(stringKeys[stringIndex], 'up', tuning)

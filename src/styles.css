@@ -21,3 +21,21 @@ body { background: #111; color: white; font-family: sans-serif; }
   .w-25 { width: 6rem; }
   .text-end { text-align: right; }
   .text-center { text-align: center; }
+
+.string-tune {
+    background-color: #2563eb;
+    color: white;
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+.string-tune:hover {
+    background-color: #1d4ed8;
+}
+
+.tune-offset {
+    width: 3.25rem;
+}
