@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ukulele Fretboard</title>
 <script type="module" src="./main.js"></script>
-<!--script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script-->
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,14 +14,17 @@
   <div id="strings-container" class="flex flex-col"></div>
 </div>
 
-<div id="tuning-buttons" class="flex flex-col mt-4"></div>
-
-<div id="tone-buttons" class="flex space-x-6 mt-4"></div>
-<div id="subtone-buttons" class="flex space-x-6 mt-2"></div>
-
-<div id="toggle-mode" class="flex space-x-6 mt-4"></div>
-
-<div id="chord-notes" class="flex space-x-6 mt-4"></div>
-
+<div id="buttons" class="flex">
+    <div id="tuning-buttons" class="flex flex-col mt-4"></div>
+    
+    <div id="chord-buttons" class="flex flex-col">
+        <div id="tone-buttons" class="flex space-x-6 mt-4"></div>
+        <div id="subtone-buttons" class="flex space-x-6 mt-2"></div>
+    </div>
+    
+</div>
+    <div id="toggle-mode" class="flex space-x-6 mt-4"></div>
+    
+    <div id="chord-notes" class="flex space-x-6 mt-4"></div>
 </body>
 </html>

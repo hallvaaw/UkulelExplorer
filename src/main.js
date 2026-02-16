@@ -223,6 +223,7 @@ const toneButtons = document.getElementById("tone-buttons")
 for (const tone of NOTES) {
   const toneButton = document.createElement('button')
   toneButton.textContent = tone
+  toneButton.className = 'tone-button'
   toneButton.addEventListener("click", () => {
       setTone(tone)
   })
@@ -233,6 +234,7 @@ const subToneButtons = document.getElementById("subtone-buttons")
 for (const subTone of SUBNOTES) {
   const subToneButton = document.createElement('button')
   subToneButton.textContent = subTone
+  subToneButton.className = 'tone-button'
   subToneButton.addEventListener("click", () => {
       setChord(subTone)
   })
@@ -331,7 +333,7 @@ function renderStrings() {
   
     const downBtn = document.createElement('button')
     downBtn.textContent = '←'
-    downBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mr-1 string-tune'
+    downBtn.className = 'string-tune'
   
     downBtn.addEventListener('click', () => {
       tuneString(stringKeys[stringIndex], 'down', tuning)
@@ -340,7 +342,7 @@ function renderStrings() {
   
     const upBtn = document.createElement('button')
     upBtn.textContent = '→'
-    upBtn.className = 'bg-blue-600 text-white font-bold px-2 py-1 rounded hover:bg-blue-700 mx-1 string-tune'
+    upBtn.className = 'string-tune'
   
     upBtn.addEventListener('click', () => {
       tuneString(stringKeys[stringIndex], 'up', tuning)

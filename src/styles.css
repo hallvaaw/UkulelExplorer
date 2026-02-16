@@ -39,3 +39,19 @@ body { background: #111; color: white; font-family: sans-serif; }
 .tune-offset {
     width: 3.25rem;
 }
+
+.tone-button {
+    background-color: #2563eb;
+    color: white;
+    font-weight: bold;
+    font-size: 0.75em;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.tone-button:hover {
+    background-color: #1d4ed8;
+}
