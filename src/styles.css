@@ -107,4 +107,10 @@ body { background: #111; color: white; font-family: sans-serif; }
     width: 4.5em;
     padding: 1em 0 0.5em 0;
     justify-content: center;
+    align-content: center;
+}
+
+.fret-markers {
+    font-weight: bold;
+    font-size: 18px;
 }

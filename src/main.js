@@ -290,7 +290,7 @@ const fretContainer = document.getElementById('fret-overview')
 NUM_FRETS.forEach(fret => {
   const div = document.createElement('div')
   div.className = 'fret-numbers'
-  if ([3,5,7,10].includes(fret)) div.classList.add('font-bold','text-white','text-xl')
+  if ([3,5,7,10].includes(fret)) div.classList.add('fret-markers')
   div.textContent = fret
   fretContainer.appendChild(div)
 })
