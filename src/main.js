@@ -324,11 +324,12 @@ function renderStrings() {
     row.className='flex items-center'
   
     const p = document.createElement('p')
-    p.className = 'w-2 mx-4 text-neutral-400 font-bold tune-offset'
     p.textContent = offset
   
     if (Math.abs(offset) > 0) {
-      p.classList.add('text-white')
+      p.className = 'tune-offset-active'
+    } else {
+      p.className = 'tune-offset'
     }
   
     const downBtn = document.createElement('button')
@@ -364,10 +365,10 @@ function renderStrings() {
 
       if (fretIndex === 0) {
         preLetter.className = 'fret-zero'
-        postLetter.className ='fret-zero'
+        postLetter.className = 'fret-zero'
       } else {
-        preLetter.className='preletter'
-        postLetter.className='preletter'
+        preLetter.className = 'preletter'
+        postLetter.className = 'preletter'
       }
 
       const isChord = allChordPositions.some(

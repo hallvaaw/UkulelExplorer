@@ -6,8 +6,6 @@ body { background: #111; color: white; font-family: sans-serif; }
   .cursor-default { cursor: default; }
   .overflow-x-auto { overflow-x: auto; }
   .border-r { border-right: 1px solid #555; }
-  .rounded { border-radius: 0.25rem; }
-  .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
   .text-white { color: white; }
   .font-bold { font-weight: bold; }
   .py-2 { padding-top: 1rem; padding-bottom: 1rem; }
@@ -33,7 +31,12 @@ body { background: #111; color: white; font-family: sans-serif; }
 }
 
 .tune-offset {
-    width: 3.25rem;
+    width: 3.25em;
+}
+
+.tune-offset-active {
+    width: 3.25em;
+    font-weight: bold;
 }
 
 .tone-button {
@@ -71,8 +74,8 @@ body { background: #111; color: white; font-family: sans-serif; }
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 1.75rem;
-    width: 1.75rem;
+    height: 2em;
+    width: 2em;
     text-align: center;
     background-color: oklch(44.8% 0.119 151.328);
     border-radius: 2rem;
@@ -82,8 +85,8 @@ body { background: #111; color: white; font-family: sans-serif; }
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 1.75rem;
-    width: 1.75rem;
+    height: 2em;
+    width: 2em;
     text-align: center;
     background-color: oklch(57.7% 0.245 27.325);
     border-radius: 0.25rem;
@@ -91,7 +94,7 @@ body { background: #111; color: white; font-family: sans-serif; }
 
 .preletter {
     height: 1px;
-    width: 1rem;
+    width: 1em;
     background-color: #555;
 }
 
