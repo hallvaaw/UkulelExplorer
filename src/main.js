@@ -133,10 +133,10 @@ let STRINGS = [
 ]
 
 function tuneStart(){
-  A_STRING = stringNotes(14, 9)
-  E_STRING = stringNotes(14, 4)
-  C_STRING = stringNotes(14, 0)
-  G_STRING = stringNotes(14, 7)
+  A_STRING = stringNotes(13, 9)
+  E_STRING = stringNotes(13, 4)
+  C_STRING = stringNotes(13, 0)
+  G_STRING = stringNotes(13, 7)
   STRINGS = [A_STRING, E_STRING, C_STRING, G_STRING]
 
   tuning = "GCEA"
@@ -171,7 +171,7 @@ const mainTunings = {
 
 function tuneFunction(tuningData) {
   for (const [key, value] of Object.entries(tuningData)) {
-    const notes = stringNotes(14, value)
+    const notes = stringNotes(13, value)
 
     switch (key) {
       case "A":
@@ -263,16 +263,16 @@ function tuneString(name, direction = "up", tuneSet) {
 
   switch (name) {
     case "A":
-      A_STRING = stringNotes(14, newStart)
+      A_STRING = stringNotes(13, newStart)
       break
     case "E":
-      E_STRING = stringNotes(14, newStart)
+      E_STRING = stringNotes(13, newStart)
       break
     case "C":
-      C_STRING = stringNotes(14, newStart)
+      C_STRING = stringNotes(13, newStart)
       break
     case "G":
-      G_STRING = stringNotes(14, newStart)
+      G_STRING = stringNotes(13, newStart)
       break
   }
 
@@ -286,10 +286,10 @@ function tuneString(name, direction = "up", tuneSet) {
   renderStrings()
 }
 
-const fretContainer = document.getElementById('fret-numbers')
+const fretContainer = document.getElementById('fret-overview')
 NUM_FRETS.forEach(fret => {
   const div = document.createElement('div')
-  div.className = 'grid text-neutral-300 shrink-0 py-2 w-25 text-end'
+  div.className = 'fret-numbers'
   if ([3,5,7,10].includes(fret)) div.classList.add('font-bold','text-white','text-xl')
   div.textContent = fret
   fretContainer.appendChild(div)
@@ -364,7 +364,7 @@ function renderStrings() {
 
       if (fretIndex === 0) {
         preLetter.className = 'fret-zero'
-        postLetter.className = 'fret-zero'
+        postLetter.className ='fret-zero'
       } else {
         preLetter.className='preletter'
         postLetter.className='preletter'
