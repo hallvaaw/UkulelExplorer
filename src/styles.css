@@ -9,9 +9,6 @@ body { background: #111; color: white; font-family: sans-serif; }
   .rounded { border-radius: 0.25rem; }
   .bg-blue-600 { background-color: #2563eb; }
   .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
-  .bg-green-800 { background-color: #065f46; }
-  .bg-red-600 { background-color: #dc2626; }
-  .bg-yellow-600 { background-color: #ca8a04; }
   .text-white { color: white; }
   .font-bold { font-weight: bold; }
   .py-2 { padding-top: 1rem; padding-bottom: 1rem; }
@@ -65,6 +62,12 @@ body { background: #111; color: white; font-family: sans-serif; }
     justify-content: flex-end;
 }
 
+.fret-zero {
+    height: 1px;
+    width: 1rem;
+    background-color: #111;
+}
+
 .letter {
     display: flex;
     align-items: center;
@@ -92,4 +95,3 @@ body { background: #111; color: white; font-family: sans-serif; }
     width: 1rem;
     background-color: #555;
 }
-

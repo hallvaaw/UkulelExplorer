@@ -352,19 +352,39 @@ function renderStrings() {
     row.append(p, downBtn, upBtn)
   
     notes.forEach((note, fretIndex) => {
+      const preLetter = document.createElement('div')
       const cell = document.createElement('div')
-      cell.textContent = toggleAccidentals(note, accidentalMode)
-      cell.className='w-25 text-center border-r py-2'
+      const postLetter = document.createElement('div')
+
+      const letter = document.createElement('div')
+      letter.className = 'letter'
+      cell.className='cell'
+
+      letter.textContent = toggleAccidentals(note, accidentalMode)
+
+      if (fretIndex === 0) {
+        preLetter.className = 'fret-zero'
+        postLetter.className = 'fret-zero'
+      } else {
+        preLetter.className='preletter'
+        postLetter.className='preletter'
+      }
 
       const isChord = allChordPositions.some(
         p => p.stringIndex === stringIndex && p.fretIndex === fretIndex
       )
 
       if (isChord) {
-        cell.classList.add('bg-red-600', 'rounded-md')
+        letter.className = 'letter-active'
       }
 
+
+      cell.appendChild(preLetter)
+      cell.appendChild(letter)
+      cell.appendChild(postLetter)
+
       row.appendChild(cell)
+
     })
   
     stringsContainer.appendChild(row)
