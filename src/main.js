@@ -321,7 +321,7 @@ function renderStrings() {
     const key = stringKeys[stringIndex]
     const offset = tuningOffsets[key]
     const row = document.createElement('div')
-    row.className='flex items-center'
+    row.className='row'
   
     const p = document.createElement('p')
     p.textContent = offset
