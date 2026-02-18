@@ -1,10 +1,6 @@
 body { background: #111; color: white; font-family: sans-serif; }
   .flex { display: flex; }
-  .flex-col { flex-direction: column; }
-  .cursor-default { cursor: default; }
-  .overflow-x-auto { overflow-x: auto; }
-  .ml-16 { margin-left: 4rem; }
-  .w-25 { width: 6rem; }
+  .flex-col {  }
 
 .string-tune {
     background-color: #2563eb;
@@ -89,6 +85,7 @@ body { background: #111; color: white; font-family: sans-serif; }
 }
 
 #fret-overview {
+    display: flex;
     padding-left: 2em;
 }
 
@@ -108,4 +105,43 @@ body { background: #111; color: white; font-family: sans-serif; }
 .row {
     display: flex;
     align-items: center;
+}
+
+#fretboard {
+    overflow-x: auto;
+}
+
+#strings-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#buttons {
+    display: flex;
+}
+
+#tuning-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+#chord-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+#tone-buttons {
+    display: flex;
+}
+
+#subtone-buttons {
+    display: flex;
+}
+
+#toggle-mode {
+    display: flex;
+}
+
+#chord-notes {
+    display: flex;
 }
