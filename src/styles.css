@@ -1,6 +1,8 @@
-body { background: #111; color: white; font-family: sans-serif; }
-  .flex { display: flex; }
-  .flex-col {  }
+body {
+    background: #111;
+    color: white;
+    font-family: sans-serif;
+}
 
 .string-tune {
     background-color: #2563eb;
@@ -39,6 +41,14 @@ body { background: #111; color: white; font-family: sans-serif; }
 
 .tone-button:hover {
     background-color: #1d4ed8;
+}
+
+.tone-button-active {
+    background-color: oklch(72.3% 0.219 149.579);
+}
+
+.tone-button-active:hover {
+    background-color: oklch(62.7% 0.194 149.214);
 }
 
 .cell {
@@ -86,7 +96,7 @@ body { background: #111; color: white; font-family: sans-serif; }
 
 #fret-overview {
     display: flex;
-    padding-left: 2em;
+    padding-left: 5.5em;
 }
 
 .fret-numbers {

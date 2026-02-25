@@ -204,9 +204,9 @@ function tuneFunction(tuningData) {
 }
 
 function tuneTo(tuningName) {
-    const tuningData = mainTunings[tuningName]
-    tuning = tuningName
-    tuneFunction(tuningData)
+  const tuningData = mainTunings[tuningName]
+  tuning = tuningName
+  tuneFunction(tuningData)
 }
 
 tuneTo("GCEA")
@@ -219,27 +219,54 @@ toggleButton.addEventListener("click", () => {
 })
 toggleModeEl.appendChild(toggleButton)
 
-const toneButtons = document.getElementById("tone-buttons")
-for (const tone of NOTES) {
-  const toneButton = document.createElement('button')
-  toneButton.textContent = tone
-  toneButton.className = 'tone-button'
-  toneButton.addEventListener("click", () => {
+function renderToneButtons() {
+  const container = document.getElementById("tone-buttons")
+  container.innerHTML = ""
+
+  NOTES.forEach(tone => {
+    const btn = document.createElement("button")
+    btn.textContent = tone
+    btn.className = "tone-button"
+
+    if (tone === selectedChord) {
+      btn.classList.add("tone-button-active")
+    }
+
+    btn.addEventListener("click", () => {
+      selectedChord = tone
+      renderToneButtons()
       setTone(tone)
+    })
+
+    container.appendChild(btn)
   })
-  toneButtons.appendChild(toneButton)
 }
 
-const subToneButtons = document.getElementById("subtone-buttons")
-for (const subTone of SUBNOTES) {
-  const subToneButton = document.createElement('button')
-  subToneButton.textContent = subTone
-  subToneButton.className = 'tone-button'
-  subToneButton.addEventListener("click", () => {
-      setChord(subTone)
+function renderSubToneButtons() {
+  const container = document.getElementById("subtone-buttons")
+  container.innerHTML = ""
+
+  SUBNOTES.forEach(tone => {
+    const btn = document.createElement("button")
+    btn.textContent = tone
+    btn.className = "tone-button"
+
+    if (tone === selectedSubChord) {
+      btn.classList.add("tone-button-active")
+    }
+
+    btn.addEventListener("click", () => {
+      selectedSubChord = tone
+      renderSubToneButtons()
+      setChord(tone)
+    })
+
+    container.appendChild(btn)
   })
-  subToneButtons.appendChild(subToneButton)
 }
+
+renderToneButtons()
+renderSubToneButtons()
 
 const tuningButtons = document.getElementById("tuning-buttons")
 
@@ -378,7 +405,6 @@ function renderStrings() {
       if (isChord) {
         letter.className = 'letter-active'
       }
-
 
       cell.appendChild(preLetter)
       cell.appendChild(letter)
