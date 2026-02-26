@@ -27,6 +27,34 @@ body {
     font-weight: bold;
 }
 
+.tuning-button {
+    background-color: #2563eb;
+    color: oklch(88.2% 0.059 254.128);
+    font-weight: bold;
+    font-size: 0.75em;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.tuning-button:hover {
+    background-color: oklch(48.8% 0.243 264.376);
+}
+
+.tuning-button-active {
+    background-color: oklch(42.4% 0.199 265.638);
+    color: white;
+    font-weight: bold;
+    font-size: 0.75em;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
 .tone-button {
     background-color: #2563eb;
     color: white;

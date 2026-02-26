@@ -6,6 +6,7 @@ const TOGGLED_NOTES = ["C","D♭","D","E♭","E","F","G♭","G","A♭","A","B♭
 const FLATS = ["D♭","E♭","G♭","A♭","B♭"]
 const SHARPS = ["C#","D#","F#","G#","A#"]
 const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug"]
+// const SUBNOTES = ["Major", "Minor", "7", "maj7", "m7", "dim", "aug", "nMaj7", "sus2", "sus4", "6", "m6", "9", "add9", "dim7", "7sus4"]
 const NUM_FRETS = Array.from({ length:13 }, (_,i) => i)
 const stringNames = ['A_STRING', 'E_STRING', 'C_STRING', 'G_STRING']
 const stringKeys = ['A', 'E', 'C', 'G']
@@ -268,16 +269,31 @@ function renderSubToneButtons() {
 renderToneButtons()
 renderSubToneButtons()
 
-const tuningButtons = document.getElementById("tuning-buttons")
+function renderTuningButtons() {
+  const container = document.getElementById("tuning-buttons")
+  container.innerHTML = ""
 
-Object.keys(mainTunings).forEach(tuning => {
-  const tuningButton = document.createElement('button')
-  tuningButton.textContent = tuning
-  tuningButton.addEventListener("click", () => {
+  Object.keys(mainTunings).forEach(mainTuning => {
+    const btn = document.createElement("button")
+    btn.textContent = mainTuning
+    btn.className = "tuning-button"
+
+    if (mainTuning === tuning) {
+      btn.classList.add("tuning-button-active")
+    }
+
+    btn.addEventListener("click", () => {
+      tuning = mainTuning
+      renderTuningButtons()
       tuneTo(tuning)
+    })
+
+    container.appendChild(btn)
   })
-  tuningButtons.appendChild(tuningButton)
-})
+
+}
+
+renderTuningButtons()
 
 function tuneString(name, direction = "up", tuneSet) {
   tuningOffsets[name] += direction === "up" ? 1 : -1
