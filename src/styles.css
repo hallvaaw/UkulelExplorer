@@ -183,3 +183,7 @@ body {
 #chord-notes {
     display: flex;
 }
+
+.chord-note {
+    margin-left: 1em;
+}

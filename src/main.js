@@ -96,6 +96,7 @@ function displaySelectedNotes() {
   for (const chordNote of displayChordNotes) {
     const noteP = document.createElement('p')
     noteP.textContent = chordNote
+    noteP.className = "chord-note"
     chordNotesEl.appendChild(noteP)
   }
 }
