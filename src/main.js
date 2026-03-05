@@ -225,23 +225,45 @@ function renderToneButtons() {
   const container = document.getElementById("tone-buttons")
   container.innerHTML = ""
 
-  NOTES.forEach(tone => {
-    const btn = document.createElement("button")
-    btn.textContent = tone
-    btn.className = "tone-button"
+  if (accidentalMode == "sharp") {
+    NOTES.forEach(tone => {
+      const btn = document.createElement("button")
+      btn.textContent = tone
+      btn.className = "tone-button"
 
-    if (tone === selectedChord) {
-      btn.classList.add("tone-button-active")
-    }
+      if (tone === selectedChord) {
+        btn.classList.add("tone-button-active")
+      }
 
-    btn.addEventListener("click", () => {
-      selectedChord = tone
-      renderToneButtons()
-      setTone(tone)
+      btn.addEventListener("click", () => {
+        selectedChord = tone
+        renderToneButtons()
+        setTone(tone)
+      })
+
+      container.appendChild(btn)
+    })
+  } else {
+    TOGGLED_NOTES.forEach(tone => {
+      const btn = document.createElement("button")
+      btn.textContent = tone
+      btn.className = "tone-button"
+
+      if (tone === selectedChord) {
+        btn.classList.add("tone-button-active")
+      }
+
+      btn.addEventListener("click", () => {
+        selectedChord = tone
+        renderToneButtons()
+        setTone(tone)
+      })
+
+      container.appendChild(btn)
     })
 
-    container.appendChild(btn)
-  })
+  }
+
 }
 
 function renderSubToneButtons() {
@@ -440,6 +462,7 @@ function render() {
   const displayToggledTones = getDisplayToggledTones()
 
   renderStrings()
+  renderToneButtons()
 }
 
 render()
