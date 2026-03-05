@@ -273,10 +273,10 @@ function renderSubToneButtons() {
   SUBNOTES.forEach(tone => {
     const btn = document.createElement("button")
     btn.textContent = tone
-    btn.className = "tone-button"
+    btn.className = "subtone-button"
 
     if (tone === selectedSubChord) {
-      btn.classList.add("tone-button-active")
+      btn.classList.add("subtone-button-active")
     }
 
     btn.addEventListener("click", () => {
