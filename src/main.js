@@ -238,8 +238,8 @@ toggleButtonSharp.addEventListener("click", () => {
     toggleButtonFlat.classList.remove("active")
 })
 
-toggleModeEl.appendChild(toggleButtonFlat)
 toggleModeEl.appendChild(toggleButtonSharp)
+toggleModeEl.appendChild(toggleButtonFlat)
 
 function renderToneButtons() {
   const container = document.getElementById("tone-buttons")
