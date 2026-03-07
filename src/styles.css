@@ -212,3 +212,25 @@ body {
 .chord-note {
     margin-left: 1em;
 }
+
+#toggle-mode {
+  display: inline-flex;
+  border: 1px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.segment {
+  border: none;
+  padding: 8px 14px;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.segment.active {
+  background: oklch(72.3% 0.219 149.579);
+  color: white;
+  font-weight: bold;
+}

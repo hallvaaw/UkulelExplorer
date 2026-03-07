@@ -91,7 +91,7 @@ const chordNotesEl = document.getElementById("chord-notes")
 function displaySelectedNotes() {
   const displayChordNotes = getDisplayChordNotes()
 
-  chordNotesEl.innerHTML = ''
+  chordNotesEl.innerHTML = 'notes: '
 
   for (const chordNote of displayChordNotes) {
     const noteP = document.createElement('p')
@@ -214,12 +214,32 @@ function tuneTo(tuningName) {
 tuneTo("GCEA")
 
 const toggleModeEl = document.getElementById("toggle-mode")
-const toggleButton = document.createElement('button')
-toggleButton.textContent = "#/♭"
-toggleButton.addEventListener("click", () => {
-    toggleMode()
+
+const toggleButtonFlat = document.createElement("button")
+const toggleButtonSharp = document.createElement("button")
+
+toggleButtonFlat.textContent = "♭"
+toggleButtonSharp.textContent = "#"
+
+toggleButtonFlat.classList.add("segment")
+toggleButtonSharp.classList.add("segment")
+
+toggleButtonSharp.classList.add("active")
+
+toggleButtonFlat.addEventListener("click", () => {
+    toggleMode("flat")
+    toggleButtonFlat.classList.add("active")
+    toggleButtonSharp.classList.remove("active")
 })
-toggleModeEl.appendChild(toggleButton)
+
+toggleButtonSharp.addEventListener("click", () => {
+    toggleMode("sharp")
+    toggleButtonSharp.classList.add("active")
+    toggleButtonFlat.classList.remove("active")
+})
+
+toggleModeEl.appendChild(toggleButtonFlat)
+toggleModeEl.appendChild(toggleButtonSharp)
 
 function renderToneButtons() {
   const container = document.getElementById("tone-buttons")
