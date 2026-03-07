@@ -91,7 +91,7 @@ const chordNotesEl = document.getElementById("chord-notes")
 function displaySelectedNotes() {
   const displayChordNotes = getDisplayChordNotes()
 
-  chordNotesEl.innerHTML = 'notes: '
+  chordNotesEl.innerHTML = ''
 
   for (const chordNote of displayChordNotes) {
     const noteP = document.createElement('p')
