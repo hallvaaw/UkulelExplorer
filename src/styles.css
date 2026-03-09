@@ -57,7 +57,7 @@ body {
 
 .tone-button {
     background-color: #2563eb;
-    color: white;
+    color: oklch(88.2% 0.059 254.128);
     font-weight: bold;
     font-size: 0.75em;
     padding: 0.5rem 1rem;
@@ -74,6 +74,7 @@ body {
 
 .tone-button-active {
     background-color: oklch(72.3% 0.219 149.579);
+    color: white;
 }
 
 .tone-button-active:hover {
@@ -82,7 +83,7 @@ body {
 
 .subtone-button {
     background-color: #2563eb;
-    color: white;
+    color: oklch(88.2% 0.059 254.128);
     font-weight: bold;
     font-size: 0.75em;
     padding: 0.5rem 1rem;
@@ -98,6 +99,7 @@ body {
 
 .subtone-button-active {
     background-color: oklch(72.3% 0.219 149.579);
+    color: white;
 }
 
 .subtone-button-active:hover {

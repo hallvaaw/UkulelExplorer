@@ -15,8 +15,8 @@ let accidentalMode = "sharp"
 let renderFlats = false
 let tuning = "GCEA"
 
-let selectedChord = null
-let selectedSubChord = null
+let selectedChord = "C"
+let selectedSubChord = "Major"
 
 let A_STRING=[], E_STRING=[], C_STRING=[], G_STRING=[]
 
