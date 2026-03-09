@@ -226,16 +226,24 @@ toggleButtonSharp.classList.add("segment")
 
 toggleButtonSharp.classList.add("active")
 
+function setAccidental() {
+    if (accidentalMode == "sharp") {
+        toggleMode("flat")
+        toggleButtonFlat.classList.add("active")
+        toggleButtonSharp.classList.remove("active")
+    } else {
+        toggleMode("sharp")
+        toggleButtonSharp.classList.add("active")
+        toggleButtonFlat.classList.remove("active")
+    }
+}
+
 toggleButtonFlat.addEventListener("click", () => {
-    toggleMode("flat")
-    toggleButtonFlat.classList.add("active")
-    toggleButtonSharp.classList.remove("active")
+    setAccidental()
 })
 
 toggleButtonSharp.addEventListener("click", () => {
-    toggleMode("sharp")
-    toggleButtonSharp.classList.add("active")
-    toggleButtonFlat.classList.remove("active")
+    setAccidental()
 })
 
 toggleModeEl.appendChild(toggleButtonSharp)
