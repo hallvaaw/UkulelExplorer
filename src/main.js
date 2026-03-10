@@ -491,6 +491,7 @@ function render() {
 
   renderStrings()
   renderToneButtons()
+  displaySelectedNotes()
 }
 
 render()
