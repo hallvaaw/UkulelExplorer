@@ -7,6 +7,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['A',  'C',  'E',  'G'],
   "dim":   ['A',  'C',  'D#'],
   "aug":   ['A',  'C#', 'F'],
+  "sus2":  ['A', 'B', 'E'],
+  "sus4":  ['A', 'D', 'E']
   },
 
   "A#" : {
@@ -17,6 +19,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['A#', 'C#', 'F',  'G#'],
   "dim":   ['A#', 'C#', 'E'],
   "aug":   ['A#', 'D',  'F#'],
+  "sus2":  ['A#', 'C', 'F'],
+  "sus4":  ['A#', 'D#', 'F']
   },
 
   "B" : {
@@ -27,6 +31,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['B',  'D',  'F#', 'A'],
   "dim":   ['B',  'D',  'F'],
   "aug":   ['B',  'D#', 'G'],
+  "sus2":  ['B', 'C#', 'F#'],
+  "sus4":  ['B', 'E', 'F#']
   },
 
   "C" : {
@@ -37,6 +43,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['C',  'D#', 'G',  'A#'],
   "dim":   ['C',  'D#', 'F#'],
   "aug":   ['C',  'E',  'G#'],
+  "sus2":  ['C', 'D', 'G'],
+  "sus4":  ['C', 'F', 'G']
   },
 
   "C#" : {
@@ -47,6 +55,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['C#', 'E',  'G#', 'B'],
   "dim":   ['C#', 'E',  'G'],
   "aug":   ['C#', 'F',  'A'],
+  "sus2":  ['C#', 'D#', 'G#'],
+  "sus4":  ['C#', 'F#', 'G#']
   },
 
   "D" : {
@@ -57,6 +67,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['D',  'F',  'A',  'C'],
   "dim":   ['D',  'F',  'G#'],
   "aug":   ['D',  'F#', 'A#'],
+  "sus2":  ['D', 'E', 'A'],
+  "sus4":  ['D', 'G', 'A']
   },
 
   "D#" : {
@@ -67,6 +79,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['D#', 'F#', 'A#', 'C#'],
   "dim":   ['D#', 'F#', 'A'],
   "aug":   ['D#', 'G',  'B'],
+  "sus2":  ['D#', 'F', 'A#'],
+  "sus4":  ['D#', 'G#', 'A#']
   },
 
   "E" : {
@@ -77,6 +91,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['E',  'G',  'B',  'D'],
   "dim":   ['E',  'G',  'A#'],
   "aug":   ['E',  'G#', 'C'],
+  "sus2":  ['E', 'F#', 'B'],
+  "sus4":  ['E', 'A', 'B']
   },
 
   "F" : {
@@ -87,6 +103,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['F',  'G#', 'C',  'D#'],
   "dim":   ['F',  'G#', 'B'],
   "aug":   ['F',  'A',  'C#'],
+  "sus2":  ['F', 'G', 'C'],
+  "sus4":  ['F', 'A#', 'C']
   },
 
   "F#" : {
@@ -97,6 +115,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['F#', 'A',  'C#', 'E'],
   "dim":   ['F#', 'A',  'C'],
   "aug":   ['F#', 'A#', 'D'],
+  "sus2":  ['F#', 'G#', 'C#'],
+  "sus4":  ['F#', 'B', 'C#']
   },
 
   "G" : {
@@ -107,6 +127,8 @@ export const CHORD_LIBRARY = {
   "m7":    ['G',  'A#', 'D',  'F'],
   "dim":   ['G',  'A#', 'C#'],
   "aug":   ['G',  'B',  'D#'],
+  "sus2":  ['G', 'A', 'D'],
+  "sus4":  ['G', 'C', 'D']
   },
 
   "G#" : {
@@ -117,5 +139,7 @@ export const CHORD_LIBRARY = {
   "m7":    ['G#', 'B',  'D#', 'F#'],
   "dim":   ['G#', 'B',  'D'],
   "aug":   ['G#', 'C',  'E'],
+  "sus2":  ['G#', 'A#', 'D#'],
+  "sus4":  ['G#', 'C#', 'D#']
   }
 };
